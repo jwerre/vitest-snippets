@@ -41,12 +41,8 @@ describe('Vitest snippets', () => {
 
 			// Validate prefix property
 			expect(prefix).toBeDefined();
-			expect(prefix).toBeInstanceOf(Array);
+			expect(prefix).toEqual(expect.any(String));
 			expect(prefix.length).toBeGreaterThan(0);
-			prefix.forEach((item) => {
-				expect(item).toEqual(expect.any(String));
-				expect(item.length).toBeGreaterThan(0);
-			});
 
 			// Validate body property
 			expect(body).toBeDefined();

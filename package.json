@@ -12,7 +12,8 @@
 		"format:fix": "prettier --write .",
 		"lint": "eslint .",
 		"spell": "cspell .",
-		"test": "vitest run"
+		"test": "vitest run",
+		"check": "npm run format && npm run lint && npm run spell && npm run test"
 	},
 	"keywords": [
 		"vitest",
