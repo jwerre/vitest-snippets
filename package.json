@@ -1,0 +1,42 @@
+{
+	"name": "zed_vitest-snippets",
+	"version": "1.0.0",
+	"description": "A comprehensive collection of Vitest snippets for the Zed editor",
+	"main": "index.js",
+	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"scripts": {
+		"format": "prettier --check .",
+		"format:fix": "prettier --write .",
+		"lint": "eslint .",
+		"spell": "cspell .",
+		"test": "vitest run"
+	},
+	"keywords": [
+		"vitest",
+		"snippets",
+		"zed",
+		"editor",
+		"javascript",
+		"typescript",
+		"testing"
+	],
+	"author": "Jonah Werre<jonahwerre@gmail.com>",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zed-industries/zed_vitest_snippets"
+	},
+	"bugs": {
+		"url": "https://github.com/zed-industries/zed_vitest_snippets/issues"
+	},
+	"homepage": "https://github.com/zed-industries/zed_vitest_snippets#readme",
+	"devDependencies": {
+		"cspell": "^9.3.0",
+		"eslint": "^9.39.1",
+		"eslint-plugin-jsonc": "^2.21.0",
+		"vitest": "^4.0.8"
+	}
+}

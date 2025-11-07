@@ -1,0 +1,36 @@
+name: vitest snippets
+
+on: [push]
+
+jobs:
+  utilities:
+    runs-on: ubuntu-latest
+
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install packages
+        run: npm ci --ignore-scripts
+
+      - name: Security audit
+        run: npm audit --audit-level=moderate --omit=dev
+
+      - name: Format check
+        run: npm run format
+
+      - name: Lint check
+        run: npm run lint
+
+      - name: Spell check
+        run: npm run spell
+
+      - name: Test
+        run: npm run test

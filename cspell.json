@@ -1,0 +1,8 @@
+{
+	"language": "en",
+	"words": ["macrotasks", "microtasks", "unmocks", "unstub", "vitest", "werre"],
+	"ignoreWords": [],
+	"flagWords": [],
+	"useGitignore": true,
+	"ignorePaths": ["cspell.json", "node_modules/**", "package-lock.json"]
+}
