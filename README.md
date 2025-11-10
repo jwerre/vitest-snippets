@@ -39,7 +39,6 @@ To use these snippets in Zed:
 - test.only(name, fn) - Runs only this test (and other .only tests).
 - test.runIf(condition)(name, fn) - Runs the test only if the condition is true.
 - test.skip(name, fn?) - Skips this test.
-- test.skipIf(condition)(name, fn) - Skips the test if the condition is true.
 - test.skipIf(condition)(name, fn?) - Skips this test if the condition is true.
 - test.todo(name) - Marks a test as not yet implemented.
 
