@@ -24,6 +24,7 @@ describe('Vitest snippets', () => {
 	});
 
 	it('should have each snippet with the correct structure', () => {
+		console.log('Number of snippets:', Object.entries(snippets).length);
 		Object.entries(snippets).forEach(([, snippet]) => {
 			// Each snippet should be an object
 			expect(typeof snippet).toBe('object');
@@ -39,9 +40,19 @@ describe('Vitest snippets', () => {
 
 			const { prefix, body, description } = snippet;
 
-			// Validate prefix property
+			// Validate prefix property, could be a string or an array of strings
 			expect(prefix).toBeDefined();
-			expect(prefix).toEqual(expect.any(String));
+			expect(prefix).toSatisfy((val) => {
+				if (typeof val === 'string') {
+					return val.length > 0;
+				} else if (Array.isArray(val)) {
+					return (
+						val.length > 0 &&
+						val.every((item) => typeof item === 'string' && item.length > 0)
+					);
+				}
+				return false;
+			});
 			expect(prefix.length).toBeGreaterThan(0);
 
 			// Validate body property

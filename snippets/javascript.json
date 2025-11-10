@@ -1,1898 +1,1877 @@
 {
-	"describe": {
-		"prefix": "describe",
-		"body": ["describe('${1:description}', () => {", "  $2", "})"],
-		"description": "Create a test suite with describe block"
-	},
-	"test": {
-		"prefix": "test",
-		"body": ["test('${1:should do something}', () => {", "  $2", "})"],
-		"description": "Create an individual test case"
-	},
-	"it": {
-		"prefix": "it",
-		"body": ["it('${1:should do something}', () => {", "  $2", "})"],
-		"description": "Create an individual test case (alias for test)"
-	},
 	"bench": {
-		"prefix": "bench",
-		"body": ["bench('${1:benchmark name}', () => {", "  $2", "})"],
+		"prefix": ["bench", "vitest", "test"],
+		"body": ["bench('${1:benchmark name}', () => {", "  $2", "})"],
 		"description": "Create an individual benchmark case"
 	},
-	"extends": {
-		"prefix": "extends",
+	"describe": {
+		"prefix": ["describe", "vitest", "test"],
+		"body": ["describe('${1:description}', () => {", "  $2", "})"],
+		"description": "Create a test suite with describe block"
+	},
+	"it": {
+		"prefix": ["it", "vitest", "test"],
+		"body": ["it('${1:should do something}', () => {", "  $2", "})"],
+		"description": "Create an individual test case (alias for test)"
+	},
+	"test": {
+		"prefix": ["test", "vitest"],
+		"body": ["test('${1:should do something}', () => {", "  $2", "})"],
+		"description": "Create an individual test case"
+	},
+	"describe.concurrent": {
+		"prefix": ["concurrent", "describe", "vitest", "test"],
+		"body": ["describe.concurrent('${1:description}', () => {", "  $2", "})"],
+		"description": "Run all tests in this suite concurrently"
+	},
+	"describe.each": {
+		"prefix": ["each", "describe", "vitest", "test"],
 		"body": [
-			"const myTest = test.extend({",
-			"  ${1:fixture}: async ({}, use) => {",
-			"    $2",
-			"    await use($3)",
-			"  }",
+			"describe.each([",
+			"  ${1:{ a: 1, b: 2, expected: 3 }},",
+			"  ${2:{ a: 2, b: 3, expected: 5 }},",
+			"  ${3:{ a: 3, b: 4, expected: 7 }}",
+			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
+			"  test(`returns $${6} when $${4} + $${5}`, () => {",
+			"    expect($4 + $5).toBe($6)",
+			"  })",
 			"})"
 		],
-		"description": "Extend the test context with custom fixtures"
+		"description": "Run a suite multiple times with different data"
 	},
-	"test.skip": {
-		"prefix": "skip",
-		"body": ["test.skip('${1:should do something}', () => {", "  $2", "})"],
-		"description": "Skip this test"
-	},
-	"test.skipIf": {
-		"prefix": "skipIf",
+	"describe.for": {
+		"prefix": ["for", "describe", "vitest", "test"],
 		"body": [
-			"test.skipIf(${1:condition})('${2:should do something}', () => {",
-			"  $3",
+			"describe.for([",
+			"  ${1:{ a: 1, b: 2, expected: 3 }},",
+			"  ${2:{ a: 2, b: 3, expected: 5 }},",
+			"  ${3:{ a: 3, b: 4, expected: 7 }}",
+			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
+			"  test(`returns $${6} when $${4} + $${5}`, () => {",
+			"    expect($4 + $5).toBe($6)",
+			"  })",
 			"})"
 		],
-		"description": "Skip this test if the condition is true"
+		"description": "Run a suite multiple times with different data"
 	},
-	"test.only": {
-		"prefix": "only",
-		"body": ["test.only('${1:should do something}', () => {", "  $2", "})"],
-		"description": "Run only this test"
+	"describe.only": {
+		"prefix": ["only", "describe", "vitest", "test"],
+		"body": ["describe.only('${1:description}', () => {", "  $2", "})"],
+		"description": "Run only this test suite"
 	},
-	"test.concurrent": {
-		"prefix": "concurrent",
-		"body": [
-			"test.concurrent('${1:should do something}', async () => {",
-			"  $2",
-			"})"
-		],
-		"description": "Run this test concurrently with others"
-	},
-	"test.todo": {
-		"prefix": "todo",
-		"body": ["test.todo('${1:should do something}')"],
-		"description": "Mark a test as not yet implemented"
-	},
-	"test.runIf": {
-		"prefix": "runIf",
-		"body": [
-			"test.runIf(${1:condition})('${2:should do something}', () => {",
-			"  $3",
-			"})"
-		],
-		"description": "Run the test only if the condition is true"
-	},
-	"test.each": {
-		"prefix": "each",
-		"body": [
-			"test.each([",
-			"  ${1:[1, 2, 3]},",
-			"  ${2:[4, 5, 9]},",
-			"  ${3:[7, 8, 15]}",
-			"])('$4 + $5 = $6', (${4:a}, ${5:b}, ${6:expected}) => {",
-			"  expect($4 + $5).toBe($6)",
-			"})"
-		],
-		"description": "Run a test multiple times with different data"
-	},
-	"skip": {
-		"prefix": "skip",
-		"body": ["describe.skip('${1:description}', () => {", "  $2", "})"],
-		"description": "Skip this test suite"
-	},
-	"skipIf": {
-		"prefix": "skipIf",
-		"body": [
-			"describe.skipIf(${1:condition})('${2:description}', () => {",
-			"  $3",
-			"})"
-		],
-		"description": "Skip this test suite if the condition is true"
-	},
-	"runIf": {
-		"prefix": "runIf",
+	"describe.runIf": {
+		"prefix": ["runIf", "describe", "vitest", "test"],
 		"body": [
 			"describe.runIf(${1:condition})('${2:description}', () => {",
-			"  $3",
+			"  $3",
 			"})"
 		],
 		"description": "Run this test suite only if the condition is true"
 	},
-	"only": {
-		"prefix": "only",
-		"body": ["describe.only('${1:description}', () => {", "  $2", "})"],
-		"description": "Run only this test suite"
-	},
-	"concurrent": {
-		"prefix": "concurrent",
-		"body": ["describe.concurrent('${1:description}', () => {", "  $2", "})"],
-		"description": "Run all tests in this suite concurrently"
-	},
-	"sequential": {
-		"prefix": "sequential",
-		"body": ["describe.sequential('${1:description}', () => {", "  $2", "})"],
+	"describe.sequential": {
+		"prefix": ["sequential", "describe", "vitest", "test"],
+		"body": ["describe.sequential('${1:description}', () => {", "  $2", "})"],
 		"description": "Run all tests in this suite sequentially"
 	},
-	"shuffle": {
-		"prefix": "shuffle",
-		"body": ["describe.shuffle('${1:description}', () => {", "  $2", "})"],
+	"describe.shuffle": {
+		"prefix": ["shuffle", "describe", "vitest", "test"],
+		"body": ["describe.shuffle('${1:description}', () => {", "  $2", "})"],
 		"description": "Run all tests in this suite in a random order"
 	},
-	"todo": {
-		"prefix": "todo",
+	"describe.skip": {
+		"prefix": ["skip", "describe", "vitest", "test"],
+		"body": ["describe.skip('${1:description}', () => {", "  $2", "})"],
+		"description": "Skip this test suite"
+	},
+	"describe.skipIf": {
+		"prefix": ["skipIf", "describe", "vitest", "test"],
+		"body": [
+			"describe.skipIf(${1:condition})('${2:description}', () => {",
+			"  $3",
+			"})"
+		],
+		"description": "Skip this test suite if the condition is true"
+	},
+	"describe.todo": {
+		"prefix": ["todo", "describe", "vitest", "test"],
 		"body": ["describe.todo('${1:description}')"],
 		"description": "Mark a test suite as not yet implemented"
 	},
-	"each": {
-		"prefix": "each",
+	"test.concurrent": {
+		"prefix": ["concurrent", "vitest", "test"],
 		"body": [
-			"describe.each([",
-			"  ${1:{ a: 1, b: 2, expected: 3 }},",
-			"  ${2:{ a: 2, b: 3, expected: 5 }},",
-			"  ${3:{ a: 3, b: 4, expected: 7 }}",
-			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
-			"  test(`returns $${6} when $${4} + $${5}`, () => {",
-			"    expect($4 + $5).toBe($6)",
-			"  })",
+			"test.concurrent('${1:should do something}', async () => {",
+			"  $2",
 			"})"
 		],
-		"description": "Run a suite multiple times with different data"
+		"description": "Run this test concurrently with others"
 	},
-	"for": {
-		"prefix": "for",
+	"test.each": {
+		"prefix": ["each", "vitest", "test", "it"],
 		"body": [
-			"describe.for([",
-			"  ${1:{ a: 1, b: 2, expected: 3 }},",
-			"  ${2:{ a: 2, b: 3, expected: 5 }},",
-			"  ${3:{ a: 3, b: 4, expected: 7 }}",
-			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
-			"  test(`returns $${6} when $${4} + $${5}`, () => {",
-			"    expect($4 + $5).toBe($6)",
-			"  })",
+			"test.each([",
+			"  ${1:[1, 2, 3]},",
+			"  ${2:[4, 5, 9]},",
+			"  ${3:[7, 8, 15]}",
+			"])('$4 + $5 = $6', (${4:a}, ${5:b}, ${6:expected}) => {",
+			"  expect($4 + $5).toBe($6)",
 			"})"
 		],
-		"description": "Run a suite multiple times with different data"
+		"description": "Run a test multiple times with different data"
+	},
+	"test.extends": {
+		"prefix": ["extends", "vitest", "test"],
+		"body": [
+			"const myTest = test.extend({",
+			"  ${1:fixture}: async ({}, use) => {",
+			"    $2",
+			"    await use($3)",
+			"  }",
+			"})"
+		],
+		"description": "Extend the test context with custom fixtures"
+	},
+	"test.only": {
+		"prefix": ["only", "vitest", "test", "it"],
+		"body": ["test.only('${1:should do something}', () => {", "  $2", "})"],
+		"description": "Run only this test"
+	},
+	"test.runIf": {
+		"prefix": ["runIf", "vitest", "test", "it"],
+		"body": [
+			"test.runIf(${1:condition})('${2:should do something}', () => {",
+			"  $3",
+			"})"
+		],
+		"description": "Run the test only if the condition is true"
+	},
+	"test.skip": {
+		"prefix": ["skip", "vitest", "test", "it"],
+		"body": ["test.skip('${1:should do something}', () => {", "  $2", "})"],
+		"description": "Skip this test"
+	},
+	"test.skipIf": {
+		"prefix": ["skipIf", "vitest", "test", "it"],
+		"body": [
+			"test.skipIf(${1:condition})('${2:should do something}', () => {",
+			"  $3",
+			"})"
+		],
+		"description": "Skip this test if the condition is true"
+	},
+	"test.todo": {
+		"prefix": ["todo", "vitest", "test"],
+		"body": ["test.todo('${1:should do something}')"],
+		"description": "Mark a test as not yet implemented"
 	},
 	"bench.skip": {
-		"prefix": "skip",
-		"body": ["bench.skip('${1:benchmark name}', () => {", "  $2", "})"],
+		"prefix": ["skip", "bench", "vitest", "test"],
+		"body": ["bench.skip('${1:benchmark name}', () => {", "  $2", "})"],
 		"description": "Skip this benchmark"
 	},
 	"bench.only": {
-		"prefix": "only",
-		"body": ["bench.only('${1:benchmark name}', () => {", "  $2", "})"],
+		"prefix": ["only", "bench", "vitest", "test"],
+		"body": ["bench.only('${1:benchmark name}', () => {", "  $2", "})"],
 		"description": "Run only this benchmark"
 	},
 	"bench.todo": {
-		"prefix": "todo",
+		"prefix": ["todo", "bench", "vitest", "test"],
 		"body": ["bench.todo('${1:benchmark name}')"],
 		"description": "Mark a benchmark as not yet implemented"
 	},
-	"beforeEach": {
-		"prefix": "beforeEach",
-		"body": ["beforeEach(() => {", "  $1", "})"],
-		"description": "Run a function before each test in the suite"
+	"afterAll": {
+		"prefix": ["afterAll", "vitest", "test"],
+		"body": ["afterAll(() => {", "  $1", "})"],
+		"description": "Run a function once after all tests in the suite"
 	},
 	"afterEach": {
-		"prefix": "afterEach",
-		"body": ["afterEach(() => {", "  $1", "})"],
+		"prefix": ["afterEach", "vitest", "test"],
+		"body": ["afterEach(() => {", "  $1", "})"],
 		"description": "Run a function after each test in the suite"
 	},
 	"beforeAll": {
-		"prefix": "beforeAll",
-		"body": ["beforeAll(() => {", "  $1", "})"],
+		"prefix": ["beforeAll", "vitest", "test"],
+		"body": ["beforeAll(() => {", "  $1", "})"],
 		"description": "Run a function once before all tests in the suite"
 	},
-	"afterAll": {
-		"prefix": "afterAll",
-		"body": ["afterAll(() => {", "  $1", "})"],
-		"description": "Run a function once after all tests in the suite"
-	},
-	"onTestFinished": {
-		"prefix": "onTestFinished",
-		"body": ["onTestFinished(() => {", "  $1", "})"],
-		"description": "Register a cleanup function to run when the test finishes"
+	"beforeEach": {
+		"prefix": ["beforeEach", "vitest", "test"],
+		"body": ["beforeEach(() => {", "  $1", "})"],
+		"description": "Run a function before each test in the suite"
 	},
 	"onTestFailed": {
-		"prefix": "onTestFailed",
-		"body": ["onTestFailed(() => {", "  $1", "})"],
+		"prefix": ["onTestFailed", "vitest", "test"],
+		"body": ["onTestFailed(() => {", "  $1", "})"],
 		"description": "Register a function to run when the test fails"
 	},
-	"fn": {
-		"prefix": "fn",
-		"body": ["vi.fn(${1:() => $2})"],
-		"description": "Create a new, empty mock function"
+	"onTestFinished": {
+		"prefix": ["onTestFinished", "vitest", "test"],
+		"body": ["onTestFinished(() => {", "  $1", "})"],
+		"description": "Register a cleanup function to run when the test finishes"
 	},
-	"spyOn": {
-		"prefix": "spyOn",
-		"body": ["vi.spyOn(${1:object}, '${2:methodName}')"],
-		"description": "Create a spy on an existing object method"
+	"getMockImplementation": {
+		"prefix": ["getMockImplementation", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.getMockImplementation()"],
+		"description": "Returns the current mock implementation"
+	},
+	"getMockName": {
+		"prefix": ["getMockName", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.getMockName()"],
+		"description": "Returns the custom name for the mock"
 	},
 	"mockClear": {
-		"prefix": "mockClear",
+		"prefix": ["mockClear", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockClear()"],
 		"description": "Clear call and instance history"
 	},
 	"mockName": {
-		"prefix": "mockName",
+		"prefix": ["mockName", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockName('${2:customName}')"],
 		"description": "Set a custom name for the mock"
 	},
 	"mockImplementation": {
-		"prefix": "mockImplementation",
-		"body": ["${1:mockFn}.mockImplementation(() => {", "  $2", "})"],
+		"prefix": ["mockImplementation", "mock", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mockImplementation(() => {", "  $2", "})"],
 		"description": "Set the default implementation of a mock"
 	},
 	"mockImplementationOnce": {
-		"prefix": "mockImplementationOnce",
-		"body": ["${1:mockFn}.mockImplementationOnce(() => {", "  $2", "})"],
+		"prefix": ["mockImplementationOnce", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mockImplementationOnce(() => {", "  $2", "})"],
 		"description": "Set a one-time implementation"
 	},
 	"withImplementation": {
-		"prefix": "withImplementation",
+		"prefix": ["withImplementation", "mock", "vitest", "test"],
 		"body": [
 			"${1:mockFn}.withImplementation(",
-			"  () => ${2:tempImplementation},",
-			"  () => {",
-			"    $3",
-			"  }",
+			"  () => ${2:tempImplementation},",
+			"  () => {",
+			"    $3",
+			"  }",
 			")"
 		],
 		"description": "Run a callback with a temporary implementation"
 	},
 	"mockRejectedValue": {
-		"prefix": "mockRejectedValue",
+		"prefix": ["mockRejectedValue", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockRejectedValue(new Error('${2:error message}'))"],
 		"description": "Set an error to be returned as a rejected promise"
 	},
 	"mockRejectedValueOnce": {
-		"prefix": "mockRejectedValueOnce",
+		"prefix": ["mockRejectedValueOnce", "mock", "vitest", "test"],
 		"body": [
 			"${1:mockFn}.mockRejectedValueOnce(new Error('${2:error message}'))"
 		],
 		"description": "Set a one-time error to be returned as a rejected promise"
 	},
 	"mockReset": {
-		"prefix": "mockReset",
+		"prefix": ["mockReset", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockReset()"],
 		"description": "Clear history and reset implementation to vi.fn()"
 	},
 	"mockRestore": {
-		"prefix": "mockRestore",
+		"prefix": ["mockRestore", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockRestore()"],
 		"description": "Clear history and restore the original implementation"
 	},
 	"mockResolvedValue": {
-		"prefix": "mockResolvedValue",
+		"prefix": ["mockResolvedValue", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockResolvedValue(${2:value})"],
 		"description": "Set a value to be returned as a resolved promise"
 	},
 	"mockResolvedValueOnce": {
-		"prefix": "mockResolvedValueOnce",
+		"prefix": ["mockResolvedValueOnce", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockResolvedValueOnce(${2:value})"],
 		"description": "Set a one-time value to be returned as a resolved promise"
 	},
 	"mockReturnThis": {
-		"prefix": "mockReturnThis",
+		"prefix": ["mockReturnThis", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockReturnThis()"],
 		"description": "Set the mock to return this context"
 	},
 	"mockReturnValue": {
-		"prefix": "mockReturnValue",
+		"prefix": ["mockReturnValue", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockReturnValue(${2:value})"],
 		"description": "Set a value to be returned"
 	},
 	"mockReturnValueOnce": {
-		"prefix": "mockReturnValueOnce",
+		"prefix": ["mockReturnValueOnce", "mock", "vitest", "test"],
 		"body": ["${1:mockFn}.mockReturnValueOnce(${2:value})"],
 		"description": "Set a one-time value to be returned"
 	},
-	"mock": {
-		"prefix": "mock",
-		"body": [
-			"vi.mock('${1:module-path}', () => ({",
-			"  ${2:default}: {",
-			"    $3",
-			"  }",
-			"}))"
-		],
-		"description": "Mock an entire module (must be hoisted)"
+	"mock.calls": {
+		"prefix": ["calls", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.calls"],
+		"description": "An array containing all call arguments"
 	},
-	"doMock": {
-		"prefix": "doMock",
+	"mock.lastCall": {
+		"prefix": ["lastCall", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.lastCall"],
+		"description": "The arguments of the last call"
+	},
+	"mock.results": {
+		"prefix": ["results", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.results"],
+		"description": "An array containing all call results (return/throw)"
+	},
+	"mock.settledResults": {
+		"prefix": ["settledResults", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.settledResults"],
+		"description": "An array of settled promise results"
+	},
+	"mock.invocationCallOrder": {
+		"prefix": ["invocationCallOrder", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.invocationCallOrder"],
+		"description": "An array of invocation call orders"
+	},
+	"mock.contexts": {
+		"prefix": ["contexts", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.contexts"],
+		"description": "An array of this contexts for all calls"
+	},
+	"mock.instances": {
+		"prefix": ["instances", "mock", "vitest", "test"],
+		"body": ["${1:mockFn}.mock.instances"],
+		"description": "An array of instances created by the mock"
+	},
+	"vi.doMock": {
+		"prefix": ["doMock", "mock", "vi", "vitest", "test"],
 		"body": [
 			"vi.doMock('${1:module-path}', () => ({",
-			"  ${2:default}: {",
-			"    $3",
-			"  }",
+			"  ${2:default}: {",
+			"    $3",
+			"  }",
 			"}))"
 		],
 		"description": "Mock a module without hoisting"
 	},
-	"mocked": {
-		"prefix": "mocked",
-		"body": ["vi.mocked(${1:value}${2:, true})"],
-		"description": "Type-cast a value as a mock"
-	},
-	"importActual": {
-		"prefix": "importActual",
-		"body": ["const ${1:actual} = await vi.importActual('${2:module-path}')"],
-		"description": "Import a module, bypassing any mocks"
-	},
-	"importMock": {
-		"prefix": "importMock",
-		"body": ["const ${1:mocked} = await vi.importMock('${2:module-path}')"],
-		"description": "Import a module with all its exports mocked"
-	},
-	"unmock": {
-		"prefix": "unmock",
-		"body": ["vi.unmock('${1:module-path}')"],
-		"description": "Specify that a module should not be mocked"
-	},
-	"doUnmock": {
-		"prefix": "doUnmock",
+	"vi.doUnmock": {
+		"prefix": ["doUnmock", "mock", "vi", "vitest", "test"],
 		"body": ["vi.doUnmock('${1:module-path}')"],
 		"description": "Unmock a module (non-hoisted)"
 	},
-	"resetModules": {
-		"prefix": "resetModules",
-		"body": ["vi.resetModules()"],
-		"description": "Clear the module import cache"
-	},
-	"dynamicImportSettled": {
-		"prefix": "dynamicImportSettled",
+	"vi.dynamicImportSettled": {
+		"prefix": ["dynamicImportSettled", "mock", "vi", "vitest", "test"],
 		"body": ["await vi.dynamicImportSettled()"],
 		"description": "Wait for all dynamic imports to resolve or reject"
 	},
-	"mockObject": {
-		"prefix": "mockObject",
-		"body": ["vi.mockObject(${1:object}, {", "  $2", "})"],
-		"description": "Create a deep mock of an object"
+	"vi.importActual": {
+		"prefix": ["importActual", "mock", "vi", "vitest", "test"],
+		"body": ["const ${1:actual} = await vi.importActual('${2:module-path}')"],
+		"description": "Import a module, bypassing any mocks"
 	},
-	"isMockFunction": {
-		"prefix": "isMockFunction",
-		"body": ["vi.isMockFunction(${1:fn})"],
-		"description": "Check if a value is a mock function or spy"
+	"vi.importMock": {
+		"prefix": ["importMock", "mock", "vi", "vitest", "test"],
+		"body": ["const ${1:mocked} = await vi.importMock('${2:module-path}')"],
+		"description": "Import a module with all its exports mocked"
 	},
-	"clearAllMocks": {
-		"prefix": "clearAllMocks",
+	"vi.mock": {
+		"prefix": ["mock", "vi", "vitest", "test"],
+		"body": [
+			"vi.mock('${1:module-path}', () => ({",
+			"  ${2:default}: {",
+			"    $3",
+			"  }",
+			"}))"
+		],
+		"description": "Mock an entire module (must be hoisted)"
+	},
+	"vi.mocked": {
+		"prefix": ["mocked", "mock", "vi", "vitest", "test"],
+		"body": ["vi.mocked(${1:value}${2:, true})"],
+		"description": "Type-cast a value as a mock"
+	},
+	"vi.resetModules": {
+		"prefix": ["resetModules", "mock", "vi", "vitest", "test"],
+		"body": ["vi.resetModules()"],
+		"description": "Clear the module import cache"
+	},
+	"vi.unmock": {
+		"prefix": ["unmock", "mock", "vi", "vitest", "test"],
+		"body": ["vi.unmock('${1:module-path}')"],
+		"description": "Specify that a module should not be mocked"
+	},
+	"vi.clearAllMocks": {
+		"prefix": ["clearAllMocks", "mock", "vi", "vitest", "test"],
 		"body": ["vi.clearAllMocks()"],
 		"description": "Clear mock.calls and mock.instances for all mocks"
 	},
-	"resetAllMocks": {
-		"prefix": "resetAllMocks",
+	"vi.fn": {
+		"prefix": ["fn", "mock", "vi", "vitest", "test"],
+		"body": ["vi.fn(${1:() => $2})"],
+		"description": "Create a new, empty mock function"
+	},
+	"vi.isMockFunction": {
+		"prefix": ["isMockFunction", "mock", "vi", "vitest", "test"],
+		"body": ["vi.isMockFunction(${1:fn})"],
+		"description": "Check if a value is a mock function or spy"
+	},
+	"vi.mockObject": {
+		"prefix": ["mockObject", "mock", "vi", "vitest", "test"],
+		"body": ["vi.mockObject(${1:object}, {", "  $2", "})"],
+		"description": "Create a deep mock of an object"
+	},
+	"vi.resetAllMocks": {
+		"prefix": ["resetAllMocks", "mock", "vi", "vitest", "test"],
 		"body": ["vi.resetAllMocks()"],
 		"description": "Reset all mocks"
 	},
-	"restoreAllMocks": {
-		"prefix": "restoreAllMocks",
+	"vi.restoreAllMocks": {
+		"prefix": ["restoreAllMocks", "mock", "vi", "vitest", "test"],
 		"body": ["vi.restoreAllMocks()"],
 		"description": "Restore all spies and mocks to their original implementations"
 	},
-	"stubEnv": {
-		"prefix": "stubEnv",
+	"vi.spyOn": {
+		"prefix": ["spyOn", "spy", "mock", "vi", "vitest", "test"],
+		"body": ["vi.spyOn(${1:object}, '${2:methodName}')"],
+		"description": "Create a spy on an existing object method"
+	},
+	"vi.stubEnv": {
+		"prefix": ["stubEnv", "vi", "vitest", "test"],
 		"body": ["vi.stubEnv('${1:NODE_ENV}', '${2:test}')"],
 		"description": "Stub an environment variable"
 	},
-	"unstubAllEnvs": {
-		"prefix": "unstubAllEnvs",
-		"body": ["vi.unstubAllEnvs()"],
-		"description": "Restore all stubbed environment variables"
-	},
-	"stubGlobal": {
-		"prefix": "stubGlobal",
+	"vi.stubGlobal": {
+		"prefix": ["stubGlobal", "vi", "vitest", "test"],
 		"body": ["vi.stubGlobal('${1:globalName}', ${2:value})"],
 		"description": "Stub a global variable"
 	},
-	"unstubAllGlobals": {
-		"prefix": "unstubAllGlobals",
+	"vi.unstubAllEnvs": {
+		"prefix": ["unstubAllEnvs", "vi", "vitest", "test"],
+		"body": ["vi.unstubAllEnvs()"],
+		"description": "Restore all stubbed environment variables"
+	},
+	"vi.unstubAllGlobals": {
+		"prefix": ["unstubAllGlobals", "vi", "vitest", "test"],
 		"body": ["vi.unstubAllGlobals()"],
 		"description": "Restore all stubbed global variables"
 	},
-	"useFakeTimers": {
-		"prefix": "useFakeTimers",
-		"body": ["vi.useFakeTimers()"],
-		"description": "Mock timer functions (setTimeout, setInterval)"
-	},
-	"useRealTimers": {
-		"prefix": "useRealTimers",
-		"body": ["vi.useRealTimers()"],
-		"description": "Restore real timer functions"
-	},
-	"advanceTimersByTime": {
-		"prefix": "advanceTimersByTime",
+	"vi.advanceTimersByTime": {
+		"prefix": ["advanceTimersByTime", "timer", "vi", "vitest", "test"],
 		"body": ["vi.advanceTimersByTime(${1:1000})"],
 		"description": "Advance fake timers by a specified time (in ms)"
 	},
-	"advanceTimersByTimeAsync": {
-		"prefix": "advanceTimersByTimeAsync",
+	"vi.advanceTimersByTimeAsync": {
+		"prefix": ["advanceTimersByTimeAsync", "timer", "vi", "vitest", "test"],
 		"body": ["await vi.advanceTimersByTimeAsync(${1:1000})"],
 		"description": "Advance fake timers by time (async version)"
 	},
-	"advanceTimersToNextTimer": {
-		"prefix": "advanceTimersToNextTimer",
-		"body": ["vi.advanceTimersToNextTimer()"],
-		"description": "Advance timers to the next scheduled timer"
-	},
-	"advanceTimersToNextTimerAsync": {
-		"prefix": "advanceTimersToNextTimerAsync",
-		"body": ["await vi.advanceTimersToNextTimerAsync()"],
-		"description": "Advance to the next timer (async version)"
-	},
-	"advanceTimersToNextFrame": {
-		"prefix": "advanceTimersToNextFrame",
+	"vi.advanceTimersToNextFrame": {
+		"prefix": ["advanceTimersToNextFrame", "timer", "vi", "vitest", "test"],
 		"body": ["vi.advanceTimersToNextFrame()"],
 		"description": "Advance timers to the next requestAnimationFrame"
 	},
-	"getTimerCount": {
-		"prefix": "getTimerCount",
-		"body": ["vi.getTimerCount()"],
-		"description": "Return the number of pending timers"
+	"vi.advanceTimersToNextTimer": {
+		"prefix": ["advanceTimersToNextTimer", "timer", "vi", "vitest", "test"],
+		"body": ["vi.advanceTimersToNextTimer()"],
+		"description": "Advance timers to the next scheduled timer"
 	},
-	"clearAllTimers": {
-		"prefix": "clearAllTimers",
+	"vi.advanceTimersToNextTimerAsync": {
+		"prefix": [
+			"advanceTimersToNextTimerAsync",
+			"timer",
+			"vi",
+			"vitest",
+			"test"
+		],
+		"body": ["await vi.advanceTimersToNextTimerAsync()"],
+		"description": "Advance to the next timer (async version)"
+	},
+	"vi.clearAllTimers": {
+		"prefix": ["clearAllTimers", "timer", "vi", "vitest", "test"],
 		"body": ["vi.clearAllTimers()"],
 		"description": "Clear all pending timers"
 	},
-	"getMockedSystemTime": {
-		"prefix": "getMockedSystemTime",
+	"vi.getMockedSystemTime": {
+		"prefix": ["getMockedSystemTime", "timer", "vi", "vitest", "test"],
 		"body": ["vi.getMockedSystemTime()"],
 		"description": "Get the current mocked system time"
 	},
-	"getRealSystemTime": {
-		"prefix": "getRealSystemTime",
+	"vi.getRealSystemTime": {
+		"prefix": ["getRealSystemTime", "timer", "vi", "vitest", "test"],
 		"body": ["vi.getRealSystemTime()"],
 		"description": "Get the current real system time"
 	},
-	"runAllTicks": {
-		"prefix": "runAllTicks",
-		"body": ["vi.runAllTicks()"],
-		"description": "Run all pending microtasks"
+	"vi.getTimerCount": {
+		"prefix": ["getTimerCount", "timer", "vi", "vitest", "test"],
+		"body": ["vi.getTimerCount()"],
+		"description": "Return the number of pending timers"
 	},
-	"runAllTimers": {
-		"prefix": "runAllTimers",
-		"body": ["vi.runAllTimers()"],
-		"description": "Run all pending macrotasks (timers)"
-	},
-	"runAllTimersAsync": {
-		"prefix": "runAllTimersAsync",
-		"body": ["await vi.runAllTimersAsync()"],
-		"description": "Run all pending macrotasks (async version)"
-	},
-	"runOnlyPendingTimers": {
-		"prefix": "runOnlyPendingTimers",
-		"body": ["vi.runOnlyPendingTimers()"],
-		"description": "Run only currently pending timers"
-	},
-	"runOnlyPendingTimersAsync": {
-		"prefix": "runOnlyPendingTimersAsync",
-		"body": ["await vi.runOnlyPendingTimersAsync()"],
-		"description": "Run only pending timers (async version)"
-	},
-	"setSystemTime": {
-		"prefix": "setSystemTime",
-		"body": ["vi.setSystemTime(${1:new Date('2024-01-01')})"],
-		"description": "Set the system time when fake timers are in use"
-	},
-	"isFakeTimers": {
-		"prefix": "isFakeTimers",
+	"vi.isFakeTimers": {
+		"prefix": ["isFakeTimers", "timer", "vi", "vitest", "test"],
 		"body": ["vi.isFakeTimers()"],
 		"description": "Check if timers are currently mocked"
 	},
-	"waitFor": {
-		"prefix": "waitFor",
-		"body": ["await vi.waitFor(() => {", "  $1", "})"],
+	"vi.runAllTicks": {
+		"prefix": ["runAllTicks", "timer", "vi", "vitest", "test"],
+		"body": ["vi.runAllTicks()"],
+		"description": "Run all pending microtasks"
+	},
+	"vi.runAllTimers": {
+		"prefix": ["runAllTimers", "timer", "vi", "vitest", "test"],
+		"body": ["vi.runAllTimers()"],
+		"description": "Run all pending macrotasks (timers)"
+	},
+	"vi.runAllTimersAsync": {
+		"prefix": ["runAllTimersAsync", "timer", "vi", "vitest", "test"],
+		"body": ["await vi.runAllTimersAsync()"],
+		"description": "Run all pending macrotasks (async version)"
+	},
+	"vi.runOnlyPendingTimers": {
+		"prefix": ["runOnlyPendingTimers", "timer", "vi", "vitest", "test"],
+		"body": ["vi.runOnlyPendingTimers()"],
+		"description": "Run only currently pending timers"
+	},
+	"vi.runOnlyPendingTimersAsync": {
+		"prefix": ["runOnlyPendingTimersAsync", "timer", "vi", "vitest", "test"],
+		"body": ["await vi.runOnlyPendingTimersAsync()"],
+		"description": "Run only pending timers (async version)"
+	},
+	"vi.setSystemTime": {
+		"prefix": ["setSystemTime", "timer", "vi", "vitest", "test"],
+		"body": ["vi.setSystemTime(${1:new Date('2024-01-01')})"],
+		"description": "Set the system time when fake timers are in use"
+	},
+	"vi.useFakeTimers": {
+		"prefix": ["useFakeTimers", "timer", "vi", "vitest", "test"],
+		"body": ["vi.useFakeTimers()"],
+		"description": "Mock timer functions (setTimeout, setInterval)"
+	},
+	"vi.useRealTimers": {
+		"prefix": ["useRealTimers", "timer", "vi", "vitest", "test"],
+		"body": ["vi.useRealTimers()"],
+		"description": "Restore real timer functions"
+	},
+	"vi.hoisted": {
+		"prefix": ["hoisted", "vi", "vitest", "test"],
+		"body": ["vi.hoisted(() => {", "  $1", "})"],
+		"description": "Execute code in a hoisted context"
+	},
+	"vi.resetConfig": {
+		"prefix": ["resetConfig", "vi", "vitest", "test"],
+		"body": ["vi.resetConfig()"],
+		"description": "Resets Vitest configuration to its default"
+	},
+	"vi.setConfig": {
+		"prefix": ["setConfig", "vi", "vitest", "test"],
+		"body": ["vi.setConfig({", "  $1", "})"],
+		"description": "Sets Vitest configuration for the current test file"
+	},
+	"vi.waitFor": {
+		"prefix": ["waitFor", "vi", "vitest", "test"],
+		"body": ["await vi.waitFor(() => {", "  $1", "})"],
 		"description": "Wait for a callback to succeed"
 	},
-	"waitUntil": {
-		"prefix": "waitUntil",
+	"vi.waitUntil": {
+		"prefix": ["waitUntil", "vi", "vitest", "test"],
 		"body": ["await vi.waitUntil(() => ${1:condition})"],
 		"description": "Wait until a condition becomes truthy"
 	},
-	"hoisted": {
-		"prefix": "hoisted",
-		"body": ["vi.hoisted(() => {", "  $1", "})"],
-		"description": "Execute code in a hoisted context"
-	},
 	"expect": {
-		"prefix": "expect",
+		"prefix": ["expect", "vitest", "test"],
 		"body": ["expect(${1:actual}).${2:toBe}(${3:expected})"],
 		"description": "Create an expectation for a value"
 	},
-	"expect.soft": {
-		"prefix": "expect.soft",
-		"body": ["expect.soft(${1:actual}).${2:toBe}(${3:expected})"],
-		"description": "Soft assertion that doesn't stop test execution"
+	"expect.assert": {
+		"prefix": ["assert", "expect", "vitest", "test"],
+		"body": ["expect.assert(${1:value}, '${2:message}')"],
+		"description": "Chai's assert API as expect.assert for convenience"
 	},
 	"expect.poll": {
-		"prefix": "expect.poll",
-		"body": [
-			"await expect.poll(() => ${1:getValue()}).${2:toBe}(${3:expected})"
-		],
-		"description": "Poll until expectation passes or timeout"
+		"prefix": ["poll", "expect", "vitest", "test"],
+		"body": [".poll(() => ${1:getValue()})"],
+		"description": "Polls a function until the assertion passes"
+	},
+	"expect.soft": {
+		"prefix": ["soft", "expect", "vitest", "test"],
+		"body": [".soft(${1:value})"],
+		"description": "Creates a soft assertion that doesn't stop the test on failure"
+	},
+	"not": {
+		"prefix": ["not", "expect", "vitest", "test"],
+		"body": [".not"],
+		"description": "Inverts the meaning of the next matcher"
+	},
+	"rejects": {
+		"prefix": ["rejects", "expect", "vitest", "test"],
+		"body": [".rejects.${1:toThrowError}(${2:error})"],
+		"description": "Unwrap a rejected promise for assertions"
+	},
+	"resolves": {
+		"prefix": ["resolves", "expect", "vitest", "test"],
+		"body": [".resolves.${1:toBe}(${2:expected})"],
+		"description": "Unwrap a promise value for assertions"
 	},
 	"toBe": {
-		"prefix": "toBe",
-		"body": ["toBe(${1:expected})"],
+		"prefix": ["toBe", "expect", "vitest", "test"],
+		"body": [".toBe(${1:expected})"],
 		"description": "Assert that values are strictly equal (===)"
 	},
-	"toEqual": {
-		"prefix": "toEqual",
-		"body": ["toEqual(${1:expected})"],
-		"description": "Assert that values are deeply equal"
-	},
-	"toStrictEqual": {
-		"prefix": "toStrictEqual",
-		"body": ["toStrictEqual(${1:expected})"],
-		"description": "Assert strict deep equality"
-	},
 	"toBeCloseTo": {
-		"prefix": "toBeCloseTo",
-		"body": ["toBeCloseTo(${1:number}, ${2:numDigits})"],
+		"prefix": ["toBeCloseTo", "expect", "vitest", "test"],
+		"body": [".toBeCloseTo(${1:number}, ${2:numDigits})"],
 		"description": "Assert floating point numbers are approximately equal"
 	},
 	"toBeDefined": {
-		"prefix": "toBeDefined",
-		"body": ["toBeDefined()"],
+		"prefix": ["toBeDefined", "expect", "vitest", "test"],
+		"body": [".toBeDefined()"],
 		"description": "Assert that a value is not undefined"
 	},
-	"toBeUndefined": {
-		"prefix": "toBeUndefined",
-		"body": ["toBeUndefined()"],
-		"description": "Assert that a value is undefined"
-	},
-	"toBeTruthy": {
-		"prefix": "toBeTruthy",
-		"body": ["toBeTruthy()"],
-		"description": "Assert that a value is truthy"
-	},
 	"toBeFalsy": {
-		"prefix": "toBeFalsy",
-		"body": ["toBeFalsy()"],
+		"prefix": ["toBeFalsy", "expect", "vitest", "test"],
+		"body": [".toBeFalsy()"],
 		"description": "Assert that a value is falsy"
 	},
-	"toBeNull": {
-		"prefix": "toBeNull",
-		"body": ["toBeNull()"],
-		"description": "Assert that a value is null"
-	},
-	"toBeNaN": {
-		"prefix": "toBeNaN",
-		"body": ["toBeNaN()"],
-		"description": "Assert that a value is NaN"
-	},
-	"toBeInstanceOf": {
-		"prefix": "toBeInstanceOf",
-		"body": ["toBeInstanceOf(${1:Class})"],
-		"description": "Assert that an object is an instance of a class"
-	},
-	"toBeTypeOf": {
-		"prefix": "toBeTypeOf",
-		"body": [
-			"toBeTypeOf('${1|string,number,boolean,object,function,undefined,symbol,bigint|}')"
-		],
-		"description": "Assert the typeof a value"
-	},
 	"toBeGreaterThan": {
-		"prefix": "toBeGreaterThan",
-		"body": ["toBeGreaterThan(${1:number})"],
+		"prefix": ["toBeGreaterThan", "expect", "vitest", "test"],
+		"body": [".toBeGreaterThan(${1:number})"],
 		"description": "Assert that a number is greater than another"
 	},
 	"toBeGreaterThanOrEqual": {
-		"prefix": "toBeGreaterThanOrEqual",
-		"body": ["toBeGreaterThanOrEqual(${1:number})"],
+		"prefix": ["toBeGreaterThanOrEqual", "expect", "vitest", "test"],
+		"body": [".toBeGreaterThanOrEqual(${1:number})"],
 		"description": "Assert that a number is greater than or equal to another"
 	},
+	"toBeInstanceOf": {
+		"prefix": ["toBeInstanceOf", "expect", "vitest", "test"],
+		"body": [".toBeInstanceOf(${1:Class})"],
+		"description": "Assert that an object is an instance of a class"
+	},
 	"toBeLessThan": {
-		"prefix": "toBeLessThan",
-		"body": ["toBeLessThan(${1:number})"],
+		"prefix": ["toBeLessThan", "expect", "vitest", "test"],
+		"body": [".toBeLessThan(${1:number})"],
 		"description": "Assert that a number is less than another"
 	},
 	"toBeLessThanOrEqual": {
-		"prefix": "toBeLessThanOrEqual",
-		"body": ["toBeLessThanOrEqual(${1:number})"],
+		"prefix": ["toBeLessThanOrEqual", "expect", "vitest", "test"],
+		"body": [".toBeLessThanOrEqual(${1:number})"],
 		"description": "Assert that a number is less than or equal to another"
 	},
+	"toBeNaN": {
+		"prefix": ["toBeNaN", "expect", "vitest", "test"],
+		"body": [".toBeNaN()"],
+		"description": "Assert that a value is NaN"
+	},
+	"toBeNull": {
+		"prefix": ["toBeNull", "expect", "vitest", "test"],
+		"body": [".toBeNull()"],
+		"description": "Assert that a value is null"
+	},
+	"toBeNullable": {
+		"prefix": ["toBeNullable", "vitest", "test"],
+		"body": [".toBeNullable()"],
+		"description": "Checks that a value is null or undefined"
+	},
+	"toBeOneOf": {
+		"prefix": ["toBeOneOf", "expect", "vitest", "test"],
+		"body": [".toBeOneOf([${1:value1}, ${2:value2}])"],
+		"description": "Checks if a value is one of the members of an array"
+	},
+	"toBeTruthy": {
+		"prefix": ["toBeTruthy", "expect", "vitest", "test"],
+		"body": [".toBeTruthy()"],
+		"description": "Assert that a value is truthy"
+	},
+	"toBeTypeOf": {
+		"prefix": ["toBeTypeOf", "expect", "vitest", "test"],
+		"body": [
+			".toBeTypeOf('${1|string,number,boolean,object,function,undefined,symbol,bigint|}')"
+		],
+		"description": "Assert the typeof a value"
+	},
+	"toBeUndefined": {
+		"prefix": ["toBeUndefined", "expect", "vitest", "test"],
+		"body": [".toBeUndefined()"],
+		"description": "Assert that a value is undefined"
+	},
 	"toContain": {
-		"prefix": "toContain",
-		"body": ["toContain(${1:item})"],
+		"prefix": ["toContain", "expect", "vitest", "test"],
+		"body": [".toContain(${1:item})"],
 		"description": "Assert that a string contains a substring or array contains an item"
 	},
 	"toContainEqual": {
-		"prefix": "toContainEqual",
-		"body": ["toContainEqual(${1:item})"],
+		"prefix": ["toContainEqual", "expect", "vitest", "test"],
+		"body": [".toContainEqual(${1:item})"],
 		"description": "Assert that an array contains an item with deep equality"
 	},
+	"toEqual": {
+		"prefix": ["toEqual", "expect", "vitest", "test"],
+		"body": [".toEqual(${1:expected})"],
+		"description": "Assert that values are deeply equal"
+	},
 	"toHaveLength": {
-		"prefix": "toHaveLength",
-		"body": ["toHaveLength(${1:length})"],
+		"prefix": ["toHaveLength", "expect", "vitest", "test"],
+		"body": [".toHaveLength(${1:length})"],
 		"description": "Assert the length of an array or string"
 	},
-	"expect.toHaveProperty": {
-		"prefix": "toHaveProperty",
-		"body": ["toHaveProperty('${1:property}'${2:, ${3:value}})"],
-		"description": "Assert that an object has a property"
+	"toHaveProperty": {
+		"prefix": ["toHaveProperty", "vitest", "test"],
+		"body": [".toHaveProperty('${1:key}'${2:, ${3:expectedType}})"],
+		"description": "Check if an object type has a specific property"
 	},
 	"toMatch": {
-		"prefix": "toMatch",
-		"body": ["toMatch(${1:/pattern/})"],
+		"prefix": ["toMatch", "expect", "vitest", "test"],
+		"body": [".toMatch(${1:/pattern/})"],
 		"description": "Assert that a string matches a regular expression"
 	},
-	"toMatchObject": {
-		"prefix": "toMatchObject",
-		"body": ["toMatchObject({", "  ${1:property}: ${2:value}", "})"],
-		"description": "Assert that an object matches a subset of properties"
-	},
-	"toThrow": {
-		"prefix": "toThrow",
-		"body": ["toThrow(${1:error})"],
-		"description": "Assert that a function throws an error"
-	},
-	"toThrowError": {
-		"prefix": "toThrowError",
-		"body": ["toThrowError(${1:/message/})"],
-		"description": "Assert that a function throws an error matching"
-	},
-	"toMatchSnapshot": {
-		"prefix": "toMatchSnapshot",
-		"body": ["toMatchSnapshot(${1:name})"],
-		"description": "Assert that a value matches a stored snapshot"
+	"toMatchFileSnapshot": {
+		"prefix": ["toMatchFileSnapshot", "expect", "vitest", "test"],
+		"body": [".toMatchFileSnapshot('${1:filepath}')"],
+		"description": "Compares a value to a snapshot in a separate file"
 	},
 	"toMatchInlineSnapshot": {
-		"prefix": "toMatchInlineSnapshot",
-		"body": ["toMatchInlineSnapshot(${1:`$2`})"],
+		"prefix": ["toMatchInlineSnapshot", "expect", "vitest", "test"],
+		"body": [".toMatchInlineSnapshot(${1:`$2`})"],
 		"description": "Assert that a value matches an inline snapshot"
 	},
+	"toMatchObject": {
+		"prefix": ["toMatchObject", "expect", "vitest", "test"],
+		"body": [".toMatchObject({", "  ${1:property}: ${2:value}", "})"],
+		"description": "Assert that an object matches a subset of properties"
+	},
+	"toMatchSnapshot": {
+		"prefix": ["toMatchSnapshot", "expect", "vitest", "test"],
+		"body": [".toMatchSnapshot(${1:name})"],
+		"description": "Assert that a value matches a stored snapshot"
+	},
+	"toSatisfy": {
+		"prefix": ["toSatisfy", "expect", "vitest", "test"],
+		"body": [".toSatisfy((${1:value}) => ${2:value > 0})"],
+		"description": "Checks if a value satisfies a predicate function"
+	},
+	"toStrictEqual": {
+		"prefix": ["toStrictEqual", "expect", "vitest", "test"],
+		"body": [".toStrictEqual(${1:expected})"],
+		"description": "Assert strict deep equality"
+	},
+	"toThrowError": {
+		"prefix": ["toThrowError", "expect", "vitest", "test"],
+		"body": [".toThrowError(${1:/message/})"],
+		"description": "Assert that a function throws an error matching"
+	},
+	"toThrowErrorMatchingInlineSnapshot": {
+		"prefix": [
+			"toThrowErrorMatchingInlineSnapshot",
+			"expect",
+			"vitest",
+			"test"
+		],
+		"body": [".toThrowErrorMatchingInlineSnapshot()"],
+		"description": "Checks if an error message matches an inline snapshot"
+	},
+	"toThrowErrorMatchingSnapshot": {
+		"prefix": ["toThrowErrorMatchingSnapshot", "expect", "vitest", "test"],
+		"body": [".toThrowErrorMatchingSnapshot()"],
+		"description": "Checks if an error message matches a snapshot"
+	},
+	"expect.assertions": {
+		"prefix": ["assertions", "expect", "vitest", "test"],
+		"body": ["expect.assertions(${1:2})"],
+		"description": "Verifies that a specific number of assertions are called"
+	},
+	"expect.hasAssertions": {
+		"prefix": ["hasAssertions", "expect", "vitest", "test"],
+		"body": ["expect.hasAssertions()"],
+		"description": "Verifies that at least one assertion is called"
+	},
+	"expect.unreachable": {
+		"prefix": ["unreachable", "expect", "vitest", "test"],
+		"body": ["expect.unreachable('${1:This should never happen}')"],
+		"description": "Marks a line as unreachable"
+	},
+	"expect.anything": {
+		"prefix": ["anything", "expect", "vitest", "test"],
+		"body": ["expect.anything()"],
+		"description": "Matches any value except null or undefined"
+	},
+	"expect.any": {
+		"prefix": ["any", "expect", "vitest", "test"],
+		"body": ["expect.any(${1:String})"],
+		"description": "Matches any value created with the given constructor"
+	},
+	"expect.closeTo": {
+		"prefix": ["closeTo", "expect", "vitest", "test"],
+		"body": ["expect.closeTo(${1:number}, ${2:precision})"],
+		"description": "Matches a number close to the expected value"
+	},
+	"expect.arrayContaining": {
+		"prefix": ["arrayContaining", "expect", "vitest", "test"],
+		"body": ["expect.arrayContaining([${1:item1}, ${2:item2}])"],
+		"description": "Matches an array containing the specified elements"
+	},
+	"expect.objectContaining": {
+		"prefix": ["objectContaining", "expect", "vitest", "test"],
+		"body": ["expect.objectContaining({", "  ${1:property}: ${2:value}", "})"],
+		"description": "Matches an object containing the specified properties"
+	},
+	"expect.stringContaining": {
+		"prefix": ["stringContaining", "expect", "vitest", "test"],
+		"body": ["expect.stringContaining('${1:substring}')"],
+		"description": "Matches a string containing the specified substring"
+	},
+	"expect.stringMatching": {
+		"prefix": ["stringMatching", "expect", "vitest", "test"],
+		"body": ["expect.stringMatching(${1:/pattern/})"],
+		"description": "Matches a string against a regex"
+	},
+	"expect.schemaMatching": {
+		"prefix": ["schemaMatching", "expect", "vitest", "test"],
+		"body": ["expect.schemaMatching(${1:schema})"],
+		"description": "Matches a value against a Zod schema"
+	},
+	"expect.addSnapshotSerializer": {
+		"prefix": ["addSnapshotSerializer", "expect", "vitest", "test"],
+		"body": [
+			"expect.addSnapshotSerializer({",
+			"  test: (val) => ${1:condition},",
+			"  serialize: (val, config, indentation, depth, refs, printer) => {",
+			"    $2",
+			"  }",
+			"})"
+		],
+		"description": "Adds a custom snapshot serializer"
+	},
+	"expect.extend": {
+		"prefix": ["extend", "expect", "vitest", "test"],
+		"body": [
+			"expect.extend({",
+			"  ${1:customMatcher}(received, expected) {",
+			"    $2",
+			"  }",
+			"})"
+		],
+		"description": "Adds custom matchers to expect"
+	},
+	"expect.addEqualityTesters": {
+		"prefix": ["addEqualityTesters", "expect", "vitest", "test"],
+		"body": [
+			"expect.addEqualityTesters([",
+			"  (a, b) => {",
+			"    $1",
+			"  }",
+			"])"
+		],
+		"description": "Adds custom equality testers"
+	},
 	"toHaveBeenCalled": {
-		"prefix": "toHaveBeenCalled",
-		"body": ["toHaveBeenCalled()"],
+		"prefix": ["toHaveBeenCalled", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalled()"],
 		"description": "Assert that a mock function was called"
 	},
+	"toHaveBeenCalledAfter": {
+		"prefix": ["toHaveBeenCalledAfter", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalledAfter(${1:otherMock})"],
+		"description": "Checks if a mock was called after another mock"
+	},
+	"toHaveBeenCalledBefore": {
+		"prefix": ["toHaveBeenCalledBefore", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalledBefore(${1:otherMock})"],
+		"description": "Checks if a mock was called before another mock"
+	},
+	"toHaveBeenCalledExactlyOnceWith": {
+		"prefix": ["toHaveBeenCalledExactlyOnceWith", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalledExactlyOnceWith(${1:arg1}${2:, ${3:arg2}})"],
+		"description": "Checks if a mock was called exactly once with specific args"
+	},
 	"toHaveBeenCalledTimes": {
-		"prefix": "toHaveBeenCalledTimes",
-		"body": ["toHaveBeenCalledTimes(${1:number})"],
+		"prefix": ["toHaveBeenCalledTimes", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalledTimes(${1:number})"],
 		"description": "Assert that a mock was called exact number of times"
 	},
 	"toHaveBeenCalledWith": {
-		"prefix": "toHaveBeenCalledWith",
-		"body": ["toHaveBeenCalledWith(${1:arg1}${2:, ${3:arg2}})"],
+		"prefix": ["toHaveBeenCalledWith", "expect", "vitest", "test"],
+		"body": [".toHaveBeenCalledWith(${1:arg1}${2:, ${3:arg2}})"],
 		"description": "Assert that a mock was called with specific arguments"
 	},
 	"toHaveBeenLastCalledWith": {
-		"prefix": "toHaveBeenLastCalledWith",
-		"body": ["toHaveBeenLastCalledWith(${1:arg1}${2:, ${3:arg2}})"],
+		"prefix": ["toHaveBeenLastCalledWith", "expect", "vitest", "test"],
+		"body": [".toHaveBeenLastCalledWith(${1:arg1}${2:, ${3:arg2}})"],
 		"description": "Assert the arguments of the last call"
 	},
 	"toHaveBeenNthCalledWith": {
-		"prefix": "toHaveBeenNthCalledWith",
-		"body": ["toHaveBeenNthCalledWith(${1:nth}, ${2:arg1}${3:, ${4:arg2}})"],
+		"prefix": ["toHaveBeenNthCalledWith", "expect", "vitest", "test"],
+		"body": [".toHaveBeenNthCalledWith(${1:nth}, ${2:arg1}${3:, ${4:arg2}})"],
 		"description": "Assert the arguments of the nth call"
 	},
-	"toHaveReturned": {
-		"prefix": "toHaveReturned",
-		"body": ["toHaveReturned()"],
-		"description": "Assert that a mock returned successfully"
-	},
-	"toHaveReturnedTimes": {
-		"prefix": "toHaveReturnedTimes",
-		"body": ["toHaveReturnedTimes(${1:number})"],
-		"description": "Assert number of times a mock returned successfully"
-	},
-	"toHaveReturnedWith": {
-		"prefix": "toHaveReturnedWith",
-		"body": ["toHaveReturnedWith(${1:value})"],
-		"description": "Assert that a mock returned a specific value"
-	},
 	"toHaveLastReturnedWith": {
-		"prefix": "toHaveLastReturnedWith",
-		"body": ["toHaveLastReturnedWith(${1:value})"],
+		"prefix": ["toHaveLastReturnedWith", "expect", "vitest", "test"],
+		"body": [".toHaveLastReturnedWith(${1:value})"],
 		"description": "Assert the value of the last return"
 	},
 	"toHaveNthReturnedWith": {
-		"prefix": "toHaveNthReturnedWith",
-		"body": ["toHaveNthReturnedWith(${1:nth}, ${2:value})"],
+		"prefix": ["toHaveNthReturnedWith", "expect", "vitest", "test"],
+		"body": [".toHaveNthReturnedWith(${1:nth}, ${2:value})"],
 		"description": "Assert the value of the nth return"
 	},
-	"resolves": {
-		"prefix": "resolves",
-		"body": ["resolves.${1:toBe}(${2:expected})"],
-		"description": "Unwrap a promise value for assertions"
+	"toHaveReturned": {
+		"prefix": ["toHaveReturned", "expect", "vitest", "test"],
+		"body": [".toHaveReturned()"],
+		"description": "Assert that a mock returned successfully"
 	},
-	"rejects": {
-		"prefix": "rejects",
-		"body": ["rejects.${1:toThrow}(${2:error})"],
-		"description": "Unwrap a rejected promise for assertions"
+	"toHaveReturnedTimes": {
+		"prefix": ["toHaveReturnedTimes", "expect", "vitest", "test"],
+		"body": [".toHaveReturnedTimes(${1:number})"],
+		"description": "Assert number of times a mock returned successfully"
+	},
+	"toHaveReturnedWith": {
+		"prefix": ["toHaveReturnedWith", "expect", "vitest", "test"],
+		"body": [".toHaveReturnedWith(${1:value})"],
+		"description": "Assert that a mock returned a specific value"
+	},
+	"toHaveLastResolvedWith": {
+		"prefix": ["toHaveLastResolvedWith", "expect", "vitest", "test"],
+		"body": [".toHaveLastResolvedWith(${1:value})"],
+		"description": "Checks the last resolved value"
+	},
+	"toHaveNthResolvedWith": {
+		"prefix": ["toHaveNthResolvedWith", "expect", "vitest", "test"],
+		"body": [".toHaveNthResolvedWith(${1:nth}, ${2:value})"],
+		"description": "Checks the nth resolved value"
+	},
+	"toHaveResolved": {
+		"prefix": ["toHaveResolved", "expect", "vitest", "test"],
+		"body": [".toHaveResolved()"],
+		"description": "Checks if a promise resolved"
+	},
+	"toHaveResolvedTimes": {
+		"prefix": ["toHaveResolvedTimes", "expect", "vitest", "test"],
+		"body": [".toHaveResolvedTimes(${1:number})"],
+		"description": "Checks how many times a promise resolved"
+	},
+	"toHaveResolvedWith": {
+		"prefix": ["toHaveResolvedWith", "expect", "vitest", "test"],
+		"body": [".toHaveResolvedWith(${1:value})"],
+		"description": "Checks if a promise resolved with a specific value"
 	},
 	"assert": {
-		"prefix": "assert",
+		"prefix": ["assert", "vitest", "test"],
 		"body": ["assert(${1:expression}, '${2:message}')"],
 		"description": "Assert that an expression is truthy"
 	},
-	"ok": {
-		"prefix": "ok",
-		"body": ["assert.ok(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is truthy"
-	},
-	"equal": {
-		"prefix": "equal",
-		"body": ["assert.equal(${1:actual}, ${2:expected}, '${3:message}')"],
-		"description": "Assert non-strict equality (==)"
-	},
-	"strictEqual": {
-		"prefix": "strictEqual",
-		"body": ["assert.strictEqual(${1:actual}, ${2:expected}, '${3:message}')"],
-		"description": "Assert strict equality (===)"
-	},
-	"deepEqual": {
-		"prefix": "deepEqual",
-		"body": ["assert.deepEqual(${1:actual}, ${2:expected}, '${3:message}')"],
-		"description": "Assert deep equality"
-	},
-	"isTrue": {
-		"prefix": "isTrue",
-		"body": ["assert.isTrue(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is true"
-	},
-	"isFalse": {
-		"prefix": "isFalse",
-		"body": ["assert.isFalse(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is false"
-	},
-	"isNull": {
-		"prefix": "isNull",
-		"body": ["assert.isNull(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is null"
-	},
-	"isNotNull": {
-		"prefix": "isNotNull",
-		"body": ["assert.isNotNull(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is not null"
-	},
-	"isUndefined": {
-		"prefix": "isUndefined",
-		"body": ["assert.isUndefined(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is undefined"
-	},
-	"isDefined": {
-		"prefix": "isDefined",
-		"body": ["assert.isDefined(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is not undefined"
-	},
-	"isFunction": {
-		"prefix": "isFunction",
-		"body": ["assert.isFunction(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is a function"
-	},
-	"isObject": {
-		"prefix": "isObject",
-		"body": ["assert.isObject(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is an object"
-	},
-	"isArray": {
-		"prefix": "isArray",
-		"body": ["assert.isArray(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is an array"
-	},
-	"isString": {
-		"prefix": "isString",
-		"body": ["assert.isString(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is a string"
-	},
-	"isNumber": {
-		"prefix": "isNumber",
-		"body": ["assert.isNumber(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is a number"
-	},
-	"isBoolean": {
-		"prefix": "isBoolean",
-		"body": ["assert.isBoolean(${1:value}, '${2:message}')"],
-		"description": "Assert that a value is a boolean"
-	},
-	"typeOf": {
-		"prefix": "typeOf",
-		"body": ["assert.typeOf(${1:value}, '${2:type}', '${3:message}')"],
-		"description": "Assert the typeof a value"
-	},
-	"instanceOf": {
-		"prefix": "instanceOf",
-		"body": ["assert.instanceOf(${1:value}, ${2:constructor}, '${3:message}')"],
-		"description": "Assert that value is instanceof constructor"
-	},
-	"include": {
-		"prefix": "include",
-		"body": ["assert.include(${1:haystack}, ${2:needle}, '${3:message}')"],
-		"description": "Assert that haystack includes needle"
-	},
-	"match": {
-		"prefix": "match",
-		"body": ["assert.match(${1:value}, ${2:/regex/}, '${3:message}')"],
-		"description": "Assert that value matches regex"
-	},
-	"property": {
-		"prefix": "property",
-		"body": ["assert.property(${1:object}, '${2:property}', '${3:message}')"],
-		"description": "Assert that object has property"
-	},
-	"lengthOf": {
-		"prefix": "lengthOf",
-		"body": ["assert.lengthOf(${1:value}, ${2:length}, '${3:message}')"],
-		"description": "Assert the length of a value"
-	},
-	"throws": {
-		"prefix": "throws",
-		"body": ["assert.throws(() => {", "  $1", "}, ${2:Error}, '${3:message}')"],
-		"description": "Assert that a function throws an error"
-	},
-	"doesNotThrow": {
-		"prefix": "doesNotThrow",
+	"assert.changes": {
+		"prefix": ["changes", "assert", "vitest", "test"],
 		"body": [
-			"assert.doesNotThrow(() => {",
-			"  $1",
-			"}, ${2:Error}, '${3:message}')"
+			"assert.changes(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
 		],
-		"description": "Assert that a function does not throw"
+		"description": "Asserts fn changes object[prop]"
+	},
+	"assert.changesButNotBy": {
+		"prefix": ["changesButNotBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.changesButNotBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn changes object[prop] but not by delta"
+	},
+	"assert.changesBy": {
+		"prefix": ["changesBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.changesBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn changes object[prop] by delta"
 	},
 	"assert.closeTo": {
-		"prefix": "closeTo",
+		"prefix": ["closeTo", "assert", "vitest", "test"],
 		"body": [
 			"assert.closeTo(${1:actual}, ${2:expected}, ${3:delta}, '${4:message}')"
 		],
 		"description": "Assert that actual is within delta of expected"
 	},
-	"expectTypeOf": {
-		"prefix": "expectTypeOf",
-		"body": ["expectTypeOf(${1:value}).${2:toEqualTypeOf}<${3:Type}>()"],
-		"description": "Assert the type of a value at compile time"
-	},
-	"assertType": {
-		"prefix": "assertType",
-		"body": ["assertType<${1:Type}>(${2:value})"],
-		"description": "Assert a value's type; fails with a type error if incorrect"
-	},
-	"toEqualTypeOf": {
-		"prefix": "toEqualTypeOf",
-		"body": ["toEqualTypeOf<${1:Type}>()"],
-		"description": "Check if types are exactly equal"
-	},
-	"toMatchTypeOf": {
-		"prefix": "toMatchTypeOf",
-		"body": ["toMatchTypeOf<${1:Type}>()"],
-		"description": "Check if the type matches a subset of T"
-	},
-	"toExtend": {
-		"prefix": "toExtend",
-		"body": ["toExtend<${1:Type}>()"],
-		"description": "Check if the type extends T"
-	},
-	"toBeAny": {
-		"prefix": "toBeAny",
-		"body": ["toBeAny()"],
-		"description": "Check if the type is any"
-	},
-	"toBeUnknown": {
-		"prefix": "toBeUnknown",
-		"body": ["toBeUnknown()"],
-		"description": "Check if the type is unknown"
-	},
-	"toBeNever": {
-		"prefix": "toBeNever",
-		"body": ["toBeNever()"],
-		"description": "Check if the type is never"
-	},
-	"toBeFunction": {
-		"prefix": "toBeFunction",
-		"body": ["toBeFunction()"],
-		"description": "Check if the type is a function"
-	},
-	"toBeObject": {
-		"prefix": "toBeObject",
-		"body": ["toBeObject()"],
-		"description": "Check if the type is an object"
-	},
-	"toBeArray": {
-		"prefix": "toBeArray",
-		"body": ["toBeArray()"],
-		"description": "Check if the type is an array"
-	},
-	"toBeString": {
-		"prefix": "toBeString",
-		"body": ["toBeString()"],
-		"description": "Check if the type is a string"
-	},
-	"toBeBoolean": {
-		"prefix": "toBeBoolean",
-		"body": ["toBeBoolean()"],
-		"description": "Check if the type is a boolean"
-	},
-	"toBeVoid": {
-		"prefix": "toBeVoid",
-		"body": ["toBeVoid()"],
-		"description": "Check if the type is void"
-	},
-	"toBeSymbol": {
-		"prefix": "toBeSymbol",
-		"body": ["toBeSymbol()"],
-		"description": "Check if the type is symbol"
-	},
-	"toBeNullable": {
-		"prefix": "toBeNullable",
-		"body": ["toBeNullable()"],
-		"description": "Check if the type is nullable"
-	},
-	"toBeCallableWith": {
-		"prefix": "toBeCallableWith",
-		"body": ["toBeCallableWith(${1:...args})"],
-		"description": "Check if a function is callable with given arguments"
-	},
-	"toBeConstructibleWith": {
-		"prefix": "toBeConstructibleWith",
-		"body": ["toBeConstructibleWith(${1:...args})"],
-		"description": "Check if a class is constructible with given arguments"
-	},
-	"toHaveProperty": {
-		"prefix": "toHaveProperty",
-		"body": ["toHaveProperty('${1:key}'${2:, ${3:expectedType}})"],
-		"description": "Check if an object type has a specific property"
-	},
-	"calls": {
-		"prefix": "calls",
-		"body": ["${1:mockFn}.mock.calls"],
-		"description": "An array containing all call arguments"
-	},
-	"lastCall": {
-		"prefix": "lastCall",
-		"body": ["${1:mockFn}.mock.lastCall"],
-		"description": "The arguments of the last call"
-	},
-	"results": {
-		"prefix": "results",
-		"body": ["${1:mockFn}.mock.results"],
-		"description": "An array containing all call results (return/throw)"
-	},
-	"settledResults": {
-		"prefix": "settledResults",
-		"body": ["${1:mockFn}.mock.settledResults"],
-		"description": "An array of settled promise results"
-	},
-	"invocationCallOrder": {
-		"prefix": "invocationCallOrder",
-		"body": ["${1:mockFn}.mock.invocationCallOrder"],
-		"description": "An array of invocation call orders"
-	},
-	"contexts": {
-		"prefix": "contexts",
-		"body": ["${1:mockFn}.mock.contexts"],
-		"description": "An array of this contexts for all calls"
-	},
-	"instances": {
-		"prefix": "instances",
-		"body": ["${1:mockFn}.mock.instances"],
-		"description": "An array of instances created by the mock"
-	},
-	"getMockImplementation": {
-		"prefix": "getMockImplementation",
-		"body": ["${1:mockFn}.getMockImplementation()"],
-		"description": "Returns the current mock implementation"
-	},
-	"getMockName": {
-		"prefix": "getMockName",
-		"body": ["${1:mockFn}.getMockName()"],
-		"description": "Returns the custom name for the mock"
-	},
-	"setConfig": {
-		"prefix": "setConfig",
-		"body": ["vi.setConfig({", "  $1", "})"],
-		"description": "Sets Vitest configuration for the current test file"
-	},
-	"resetConfig": {
-		"prefix": "resetConfig",
-		"body": ["vi.resetConfig()"],
-		"description": "Resets Vitest configuration to its default"
-	},
-	"expect.assert": {
-		"prefix": "assert",
-		"body": ["expect.assert(${1:value}, '${2:message}')"],
-		"description": "Chai's assert API as expect.assert for convenience"
-	},
-	"not": {
-		"prefix": "not",
-		"body": [".not"],
-		"description": "Inverts the meaning of the next matcher"
-	},
-	"poll": {
-		"prefix": "poll",
-		"body": [".poll(() => ${1:getValue()})"],
-		"description": "Polls a function until the assertion passes"
-	},
-	"soft": {
-		"prefix": "soft",
-		"body": [".soft(${1:value})"],
-		"description": "Creates a soft assertion that doesn't stop the test on failure"
-	},
-	"expect.toBeNullable": {
-		"prefix": "expect.toBeNullable",
-		"body": ["toBeNullable()"],
-		"description": "Checks that a value is null or undefined"
-	},
-	"toBeOneOf": {
-		"prefix": "toBeOneOf",
-		"body": ["toBeOneOf([${1:value1}, ${2:value2}])"],
-		"description": "Checks if a value is one of the members of an array"
-	},
-	"toMatchFileSnapshot": {
-		"prefix": "toMatchFileSnapshot",
-		"body": ["toMatchFileSnapshot('${1:filepath}')"],
-		"description": "Compares a value to a snapshot in a separate file"
-	},
-	"toSatisfy": {
-		"prefix": "toSatisfy",
-		"body": ["toSatisfy((${1:value}) => ${2:value > 0})"],
-		"description": "Checks if a value satisfies a predicate function"
-	},
-	"toThrowErrorMatchingInlineSnapshot": {
-		"prefix": "toThrowErrorMatchingInlineSnapshot",
-		"body": ["toThrowErrorMatchingInlineSnapshot()"],
-		"description": "Checks if an error message matches an inline snapshot"
-	},
-	"toThrowErrorMatchingSnapshot": {
-		"prefix": "toThrowErrorMatchingSnapshot",
-		"body": ["toThrowErrorMatchingSnapshot()"],
-		"description": "Checks if an error message matches a snapshot"
-	},
-	"assertions": {
-		"prefix": "assertions",
-		"body": ["expect.assertions(${1:2})"],
-		"description": "Verifies that a specific number of assertions are called"
-	},
-	"hasAssertions": {
-		"prefix": "hasAssertions",
-		"body": ["expect.hasAssertions()"],
-		"description": "Verifies that at least one assertion is called"
-	},
-	"unreachable": {
-		"prefix": "unreachable",
-		"body": ["expect.unreachable('${1:This should never happen}')"],
-		"description": "Marks a line as unreachable"
-	},
-	"anything": {
-		"prefix": "anything",
-		"body": ["expect.anything()"],
-		"description": "Matches any value except null or undefined"
-	},
-	"any": {
-		"prefix": "any",
-		"body": ["expect.any(${1:String})"],
-		"description": "Matches any value created with the given constructor"
-	},
-	"closeTo": {
-		"prefix": "closeTo",
-		"body": ["expect.closeTo(${1:number}, ${2:precision})"],
-		"description": "Matches a number close to the expected value"
-	},
-	"arrayContaining": {
-		"prefix": "arrayContaining",
-		"body": ["expect.arrayContaining([${1:item1}, ${2:item2}])"],
-		"description": "Matches an array containing the specified elements"
-	},
-	"objectContaining": {
-		"prefix": "objectContaining",
-		"body": ["expect.objectContaining({", "  ${1:property}: ${2:value}", "})"],
-		"description": "Matches an object containing the specified properties"
-	},
-	"stringContaining": {
-		"prefix": "stringContaining",
-		"body": ["expect.stringContaining('${1:substring}')"],
-		"description": "Matches a string containing the specified substring"
-	},
-	"stringMatching": {
-		"prefix": "stringMatching",
-		"body": ["expect.stringMatching(${1:/pattern/})"],
-		"description": "Matches a string against a regex"
-	},
-	"schemaMatching": {
-		"prefix": "schemaMatching",
-		"body": ["expect.schemaMatching(${1:schema})"],
-		"description": "Matches a value against a Zod schema"
-	},
-	"addSnapshotSerializer": {
-		"prefix": "addSnapshotSerializer",
-		"body": [
-			"expect.addSnapshotSerializer({",
-			"  test: (val) => ${1:condition},",
-			"  serialize: (val, config, indentation, depth, refs, printer) => {",
-			"    $2",
-			"  }",
-			"})"
-		],
-		"description": "Adds a custom snapshot serializer"
-	},
-	"extend": {
-		"prefix": "extend",
-		"body": [
-			"expect.extend({",
-			"  ${1:customMatcher}(received, expected) {",
-			"    $2",
-			"  }",
-			"})"
-		],
-		"description": "Adds custom matchers to expect"
-	},
-	"addEqualityTesters": {
-		"prefix": "addEqualityTesters",
-		"body": [
-			"expect.addEqualityTesters([",
-			"  (a, b) => {",
-			"    $1",
-			"  }",
-			"])"
-		],
-		"description": "Adds custom equality testers"
-	},
-	"toHaveBeenCalledBefore": {
-		"prefix": "toHaveBeenCalledBefore",
-		"body": ["toHaveBeenCalledBefore(${1:otherMock})"],
-		"description": "Checks if a mock was called before another mock"
-	},
-	"toHaveBeenCalledAfter": {
-		"prefix": "toHaveBeenCalledAfter",
-		"body": ["toHaveBeenCalledAfter(${1:otherMock})"],
-		"description": "Checks if a mock was called after another mock"
-	},
-	"toHaveBeenCalledExactlyOnceWith": {
-		"prefix": "toHaveBeenCalledExactlyOnceWith",
-		"body": ["toHaveBeenCalledExactlyOnceWith(${1:arg1}${2:, ${3:arg2}})"],
-		"description": "Checks if a mock was called exactly once with specific args"
-	},
-	"toHaveResolved": {
-		"prefix": "toHaveResolved",
-		"body": ["toHaveResolved()"],
-		"description": "Checks if a promise resolved"
-	},
-	"toHaveResolvedTimes": {
-		"prefix": "toHaveResolvedTimes",
-		"body": ["toHaveResolvedTimes(${1:number})"],
-		"description": "Checks how many times a promise resolved"
-	},
-	"toHaveResolvedWith": {
-		"prefix": "toHaveResolvedWith",
-		"body": ["toHaveResolvedWith(${1:value})"],
-		"description": "Checks if a promise resolved with a specific value"
-	},
-	"toHaveLastResolvedWith": {
-		"prefix": "toHaveLastResolvedWith",
-		"body": ["toHaveLastResolvedWith(${1:value})"],
-		"description": "Checks the last resolved value"
-	},
-	"toHaveNthResolvedWith": {
-		"prefix": "toHaveNthResolvedWith",
-		"body": ["toHaveNthResolvedWith(${1:nth}, ${2:value})"],
-		"description": "Checks the nth resolved value"
-	},
-	"fail": {
-		"prefix": "fail",
-		"body": ["assert.fail('${1:message}')"],
-		"description": "Throws an assertion error"
-	},
-	"isOk": {
-		"prefix": "isOk",
-		"body": ["assert.isOk(${1:value}, '${2:message}')"],
-		"description": "Asserts that a value is truthy"
-	},
-	"isNotOk": {
-		"prefix": "isNotOk",
-		"body": ["assert.isNotOk(${1:value}, '${2:message}')"],
-		"description": "Asserts that a value is falsy"
-	},
-	"notEqual": {
-		"prefix": "notEqual",
-		"body": ["assert.notEqual(${1:actual}, ${2:expected}, '${3:message}')"],
-		"description": "Asserts non-strict inequality (!=)"
-	},
-	"notDeepEqual": {
-		"prefix": "notDeepEqual",
-		"body": ["assert.notDeepEqual(${1:actual}, ${2:expected}, '${3:message}')"],
-		"description": "Asserts deep inequality"
-	},
-	"isAbove": {
-		"prefix": "isAbove",
-		"body": ["assert.isAbove(${1:value}, ${2:above}, '${3:message}')"],
-		"description": "Asserts value > above"
-	},
-	"isAtLeast": {
-		"prefix": "isAtLeast",
-		"body": ["assert.isAtLeast(${1:value}, ${2:atLeast}, '${3:message}')"],
-		"description": "Asserts value >= atLeast"
-	},
-	"isBelow": {
-		"prefix": "isBelow",
-		"body": ["assert.isBelow(${1:value}, ${2:below}, '${3:message}')"],
-		"description": "Asserts value < below"
-	},
-	"isAtMost": {
-		"prefix": "isAtMost",
-		"body": ["assert.isAtMost(${1:value}, ${2:atMost}, '${3:message}')"],
-		"description": "Asserts value <= atMost"
-	},
-	"isNotTrue": {
-		"prefix": "isNotTrue",
-		"body": ["assert.isNotTrue(${1:value}, '${2:message}')"],
-		"description": "Asserts value !== true"
-	},
-	"isNotFalse": {
-		"prefix": "isNotFalse",
-		"body": ["assert.isNotFalse(${1:value}, '${2:message}')"],
-		"description": "Asserts value !== false"
-	},
-	"isNaN": {
-		"prefix": "isNaN",
-		"body": ["assert.isNaN(${1:value}, '${2:message}')"],
-		"description": "Asserts value is NaN"
-	},
-	"isNotNaN": {
-		"prefix": "isNotNaN",
-		"body": ["assert.isNotNaN(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not NaN"
-	},
-	"exists": {
-		"prefix": "exists",
-		"body": ["assert.exists(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not null or undefined"
-	},
-	"notExists": {
-		"prefix": "notExists",
-		"body": ["assert.notExists(${1:value}, '${2:message}')"],
-		"description": "Asserts value is null or undefined"
-	},
-	"isNotFunction": {
-		"prefix": "isNotFunction",
-		"body": ["assert.isNotFunction(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not a function"
-	},
-	"isNotObject": {
-		"prefix": "isNotObject",
-		"body": ["assert.isNotObject(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not an object"
-	},
-	"isNotArray": {
-		"prefix": "isNotArray",
-		"body": ["assert.isNotArray(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not an array"
-	},
-	"isNotString": {
-		"prefix": "isNotString",
-		"body": ["assert.isNotString(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not a string"
-	},
-	"isNotNumber": {
-		"prefix": "isNotNumber",
-		"body": ["assert.isNotNumber(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not a number"
-	},
-	"isFinite": {
-		"prefix": "isFinite",
-		"body": ["assert.isFinite(${1:value}, '${2:message}')"],
-		"description": "Asserts value is a finite number"
-	},
-	"isNotBoolean": {
-		"prefix": "isNotBoolean",
-		"body": ["assert.isNotBoolean(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not a boolean"
-	},
-	"notTypeOf": {
-		"prefix": "notTypeOf",
-		"body": ["assert.notTypeOf(${1:value}, '${2:type}', '${3:message}')"],
-		"description": "Asserts typeof value !== type"
-	},
-	"notInstanceOf": {
-		"prefix": "notInstanceOf",
-		"body": [
-			"assert.notInstanceOf(${1:value}, ${2:constructor}, '${3:message}')"
-		],
-		"description": "Asserts !(value instanceof constructor)"
-	},
-	"notInclude": {
-		"prefix": "notInclude",
-		"body": ["assert.notInclude(${1:haystack}, ${2:needle}, '${3:message}')"],
-		"description": "Asserts !haystack.includes(needle)"
-	},
-	"deepInclude": {
-		"prefix": "deepInclude",
-		"body": ["assert.deepInclude(${1:haystack}, ${2:needle}, '${3:message}')"],
-		"description": "Asserts haystack deep-includes needle"
-	},
-	"notDeepInclude": {
-		"prefix": "notDeepInclude",
-		"body": [
-			"assert.notDeepInclude(${1:haystack}, ${2:needle}, '${3:message}')"
-		],
-		"description": "Asserts haystack does not deep-include needle"
-	},
-	"nestedInclude": {
-		"prefix": "nestedInclude",
-		"body": [
-			"assert.nestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
-		],
-		"description": "Asserts value has needle at path"
-	},
-	"notNestedInclude": {
-		"prefix": "notNestedInclude",
-		"body": [
-			"assert.notNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
-		],
-		"description": "Asserts value does not have needle at path"
-	},
-	"deepNestedInclude": {
-		"prefix": "deepNestedInclude",
-		"body": [
-			"assert.deepNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
-		],
-		"description": "Asserts value has deep-equal needle at path"
-	},
-	"notDeepNestedInclude": {
-		"prefix": "notDeepNestedInclude",
-		"body": [
-			"assert.notDeepNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
-		],
-		"description": "Asserts value does not have deep-equal needle at path"
-	},
-	"ownInclude": {
-		"prefix": "ownInclude",
-		"body": ["assert.ownInclude(${1:value}, ${2:needle}, '${3:message}')"],
-		"description": "Asserts value has own property needle"
-	},
-	"notOwnInclude": {
-		"prefix": "notOwnInclude",
-		"body": ["assert.notOwnInclude(${1:value}, ${2:needle}, '${3:message}')"],
-		"description": "Asserts value does not have own property needle"
-	},
-	"deepOwnInclude": {
-		"prefix": "deepOwnInclude",
-		"body": ["assert.deepOwnInclude(${1:value}, ${2:needle}, '${3:message}')"],
-		"description": "Asserts value has deep-equal own property needle"
-	},
-	"notDeepOwnInclude": {
-		"prefix": "notDeepOwnInclude",
-		"body": [
-			"assert.notDeepOwnInclude(${1:value}, ${2:needle}, '${3:message}')"
-		],
-		"description": "Asserts value does not have deep-equal own property needle"
-	},
-	"notMatch": {
-		"prefix": "notMatch",
-		"body": ["assert.notMatch(${1:value}, ${2:/regex/}, '${3:message}')"],
-		"description": "Asserts !regex.test(value)"
-	},
-	"notProperty": {
-		"prefix": "notProperty",
-		"body": ["assert.notProperty(${1:object}, '${2:prop}', '${3:message}')"],
-		"description": "Asserts object does not have property prop"
-	},
-	"propertyVal": {
-		"prefix": "propertyVal",
-		"body": [
-			"assert.propertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts object[prop] == value"
-	},
-	"notPropertyVal": {
-		"prefix": "notPropertyVal",
-		"body": [
-			"assert.notPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts object[prop] != value"
-	},
-	"deepPropertyVal": {
-		"prefix": "deepPropertyVal",
-		"body": [
-			"assert.deepPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts object[prop] deep equals value"
-	},
-	"notDeepPropertyVal": {
-		"prefix": "notDeepPropertyVal",
-		"body": [
-			"assert.notDeepPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts object[prop] does not deep equal value"
-	},
-	"nestedProperty": {
-		"prefix": "nestedProperty",
-		"body": ["assert.nestedProperty(${1:object}, '${2:path}', '${3:message}')"],
-		"description": "Asserts object has nested property path"
-	},
-	"notNestedProperty": {
-		"prefix": "notNestedProperty",
-		"body": [
-			"assert.notNestedProperty(${1:object}, '${2:path}', '${3:message}')"
-		],
-		"description": "Asserts object does not have nested property path"
-	},
-	"nestedPropertyVal": {
-		"prefix": "nestedPropertyVal",
-		"body": [
-			"assert.nestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts nested property path equals value"
-	},
-	"notNestedPropertyVal": {
-		"prefix": "notNestedPropertyVal",
-		"body": [
-			"assert.notNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts nested property path does not equal value"
-	},
-	"deepNestedPropertyVal": {
-		"prefix": "deepNestedPropertyVal",
-		"body": [
-			"assert.deepNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts nested property path deep equals value"
-	},
-	"notDeepNestedPropertyVal": {
-		"prefix": "notDeepNestedPropertyVal",
-		"body": [
-			"assert.notDeepNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
-		],
-		"description": "Asserts nested property path does not deep equal value"
-	},
-	"hasAnyKeys": {
-		"prefix": "hasAnyKeys",
-		"body": [
-			"assert.hasAnyKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object has at least one of keys"
-	},
-	"hasAllKeys": {
-		"prefix": "hasAllKeys",
-		"body": [
-			"assert.hasAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object has all keys"
-	},
-	"containsAllKeys": {
-		"prefix": "containsAllKeys",
-		"body": [
-			"assert.containsAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "(Alias for hasAllKeys)"
-	},
-	"doesNotHaveAnyKeys": {
-		"prefix": "doesNotHaveAnyKeys",
-		"body": [
-			"assert.doesNotHaveAnyKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object has none of keys"
-	},
-	"doesNotHaveAllKeys": {
-		"prefix": "doesNotHaveAllKeys",
-		"body": [
-			"assert.doesNotHaveAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object does not have all keys"
-	},
-	"hasAnyDeepKeys": {
-		"prefix": "hasAnyDeepKeys",
-		"body": [
-			"assert.hasAnyDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object has at least one deep keys"
-	},
-	"hasAllDeepKeys": {
-		"prefix": "hasAllDeepKeys",
-		"body": [
-			"assert.hasAllDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
-		],
-		"description": "Asserts object has all deep keys"
-	},
-	"containsAllDeepKeys": {
-		"prefix": "containsAllDeepKeys",
+	"assert.containsAllDeepKeys": {
+		"prefix": ["containsAllDeepKeys", "assert", "vitest", "test"],
 		"body": [
 			"assert.containsAllDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
 		"description": "(Alias for hasAllDeepKeys)"
 	},
-	"doesNotHaveAnyDeepKeys": {
-		"prefix": "doesNotHaveAnyDeepKeys",
+	"assert.containsAllKeys": {
+		"prefix": ["containsAllKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.doesNotHaveAnyDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
+			"assert.containsAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts object has no deep keys"
+		"description": "(Alias for hasAllKeys)"
 	},
-	"doesNotHaveAllDeepKeys": {
-		"prefix": "doesNotHaveAllDeepKeys",
+	"assert.decreases": {
+		"prefix": ["decreases", "assert", "vitest", "test"],
+		"body": [
+			"assert.decreases(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
+		],
+		"description": "Asserts fn decreases object[prop]"
+	},
+	"assert.decreasesButNotBy": {
+		"prefix": ["decreasesButNotBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.decreasesButNotBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn decreases object[prop] but not by delta"
+	},
+	"assert.decreasesBy": {
+		"prefix": ["decreasesBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.decreasesBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn decreases object[prop] by delta"
+	},
+	"assert.deepEqual": {
+		"prefix": ["deepEqual", "assert", "vitest", "test"],
+		"body": ["assert.deepEqual(${1:actual}, ${2:expected}, '${3:message}')"],
+		"description": "Assert deep equality"
+	},
+	"assert.deepInclude": {
+		"prefix": ["deepInclude", "assert", "vitest", "test"],
+		"body": ["assert.deepInclude(${1:haystack}, ${2:needle}, '${3:message}')"],
+		"description": "Asserts haystack deep-includes needle"
+	},
+	"assert.deepNestedInclude": {
+		"prefix": ["deepNestedInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.deepNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
+		],
+		"description": "Asserts value has deep-equal needle at path"
+	},
+	"assert.deepNestedPropertyVal": {
+		"prefix": ["deepNestedPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.deepNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts nested property path deep equals value"
+	},
+	"assert.deepOwnInclude": {
+		"prefix": ["deepOwnInclude", "assert", "vitest", "test"],
+		"body": ["assert.deepOwnInclude(${1:value}, ${2:needle}, '${3:message}')"],
+		"description": "Asserts value has deep-equal own property needle"
+	},
+	"assert.deepPropertyVal": {
+		"prefix": ["deepPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.deepPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts object[prop] deep equals value"
+	},
+	"assert.doesNotChange": {
+		"prefix": ["doesNotChange", "assert", "vitest", "test"],
+		"body": [
+			"assert.doesNotChange(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
+		],
+		"description": "Asserts fn does not change object[prop]"
+	},
+	"assert.doesNotDecrease": {
+		"prefix": ["doesNotDecrease", "assert", "vitest", "test"],
+		"body": [
+			"assert.doesNotDecrease(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
+		],
+		"description": "Asserts fn does not decrease object[prop]"
+	},
+	"assert.doesNotHaveAllDeepKeys": {
+		"prefix": ["doesNotHaveAllDeepKeys", "assert", "vitest", "test"],
 		"body": [
 			"assert.doesNotHaveAllDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
 		"description": "Asserts object does not have all deep keys"
 	},
-	"operator": {
-		"prefix": "operator",
-		"body": ["assert.operator(${1:val1}, '${2:>}', ${3:val2}, '${4:message}')"],
-		"description": "Asserts val1 op val2 is truthy"
-	},
-	"sameMembers": {
-		"prefix": "sameMembers",
+	"assert.doesNotHaveAllKeys": {
+		"prefix": ["doesNotHaveAllKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.sameMembers([${1:1, 2, 3}], [${2:3, 2, 1}], '${3:message}')"
+			"assert.doesNotHaveAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 have the same members"
+		"description": "Asserts object does not have all keys"
 	},
-	"notSameMembers": {
-		"prefix": "notSameMembers",
+	"assert.doesNotHaveAnyDeepKeys": {
+		"prefix": ["doesNotHaveAnyDeepKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.notSameMembers([${1:1, 2, 3}], [${2:3, 2, 1}], '${3:message}')"
+			"assert.doesNotHaveAnyDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 do not have the same members"
+		"description": "Asserts object has no deep keys"
 	},
-	"sameDeepMembers": {
-		"prefix": "sameDeepMembers",
+	"assert.doesNotHaveAnyKeys": {
+		"prefix": ["doesNotHaveAnyKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.sameDeepMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+			"assert.doesNotHaveAnyKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 have the same deep members"
+		"description": "Asserts object has none of keys"
 	},
-	"notSameDeepMembers": {
-		"prefix": "notSameDeepMembers",
+	"assert.doesNotIncrease": {
+		"prefix": ["doesNotIncrease", "assert", "vitest", "test"],
 		"body": [
-			"assert.notSameDeepMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+			"assert.doesNotIncrease(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
 		],
-		"description": "Asserts set1 and set2 do not have the same deep members"
+		"description": "Asserts fn does not increase object[prop]"
 	},
-	"sameOrderedMembers": {
-		"prefix": "sameOrderedMembers",
+	"doesNotThrow": {
+		"prefix": ["doesNotThrow", "assert", "vitest", "test"],
 		"body": [
-			"assert.sameOrderedMembers([${1:1, 2, 3}], [${2:1, 2, 3}], '${3:message}')"
+			"assert.doesNotThrow(() => {",
+			"  $1",
+			"}, ${2:Error}, '${3:message}')"
 		],
-		"description": "Asserts set1 and set2 have same members in same order"
+		"description": "Assert that a function does not throw"
 	},
-	"notSameOrderedMembers": {
-		"prefix": "notSameOrderedMembers",
+	"assert.equal": {
+		"prefix": ["equal", "assert", "vitest", "test"],
+		"body": ["assert.equal(${1:actual}, ${2:expected}, '${3:message}')"],
+		"description": "Assert non-strict equality (==)"
+	},
+	"assert.exists": {
+		"prefix": ["exists", "assert", "vitest", "test"],
+		"body": ["assert.exists(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not null or undefined"
+	},
+	"assert.fail": {
+		"prefix": ["fail", "assert", "vitest", "test"],
+		"body": ["assert.fail('${1:message}')"],
+		"description": "Throws an assertion error"
+	},
+	"assert.hasAllDeepKeys": {
+		"prefix": ["hasAllDeepKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.notSameOrderedMembers([${1:1, 2, 3}], [${2:1, 2, 3}], '${3:message}')"
+			"assert.hasAllDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 do not have same members in same order"
+		"description": "Asserts object has all deep keys"
 	},
-	"sameDeepOrderedMembers": {
-		"prefix": "sameDeepOrderedMembers",
+	"assert.hasAllKeys": {
+		"prefix": ["hasAllKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.sameDeepOrderedMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+			"assert.hasAllKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 have same deep members in same order"
+		"description": "Asserts object has all keys"
 	},
-	"notSameDeepOrderedMembers": {
-		"prefix": "notSameDeepOrderedMembers",
+	"assert.hasAnyDeepKeys": {
+		"prefix": ["hasAnyDeepKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.notSameDeepOrderedMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+			"assert.hasAnyDeepKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts set1 and set2 do not have same deep members in same order"
+		"description": "Asserts object has at least one deep keys"
 	},
-	"includeMembers": {
-		"prefix": "includeMembers",
+	"assert.hasAnyKeys": {
+		"prefix": ["hasAnyKeys", "assert", "vitest", "test"],
 		"body": [
-			"assert.includeMembers([${1:1, 2, 3, 4}], [${2:2, 3}], '${3:message}')"
+			"assert.hasAnyKeys(${1:object}, [${2:'key1'}, ${3:'key2'}], '${4:message}')"
 		],
-		"description": "Asserts superset includes all members of subset"
+		"description": "Asserts object has at least one of keys"
 	},
-	"notIncludeMembers": {
-		"prefix": "notIncludeMembers",
-		"body": [
-			"assert.notIncludeMembers([${1:1, 2, 3, 4}], [${2:5, 6}], '${3:message}')"
-		],
-		"description": "Asserts superset does not include all members of subset"
+	"assert.ifError": {
+		"prefix": ["ifError", "assert", "vitest", "test"],
+		"body": ["assert.ifError(${1:value}, '${2:message}')"],
+		"description": "Asserts value is falsy"
 	},
-	"includeDeepMembers": {
-		"prefix": "includeDeepMembers",
+	"assert.include": {
+		"prefix": ["include", "assert", "vitest", "test"],
+		"body": ["assert.include(${1:haystack}, ${2:needle}, '${3:message}')"],
+		"description": "Assert that haystack includes needle"
+	},
+	"assert.includeDeepMembers": {
+		"prefix": ["includeDeepMembers", "assert", "vitest", "test"],
 		"body": [
 			"assert.includeDeepMembers([${1:{a: 1}, {b: 2}}], [${2:{a: 1}}], '${3:message}')"
 		],
 		"description": "Asserts superset deep-includes all members of subset"
 	},
-	"notIncludeDeepMembers": {
-		"prefix": "notIncludeDeepMembers",
-		"body": [
-			"assert.notIncludeDeepMembers([${1:{a: 1}, {b: 2}}], [${2:{c: 3}}], '${3:message}')"
-		],
-		"description": "Asserts superset does not deep-include all members of subset"
-	},
-	"includeOrderedMembers": {
-		"prefix": "includeOrderedMembers",
-		"body": [
-			"assert.includeOrderedMembers([${1:1, 2, 3, 4}], [${2:2, 3}], '${3:message}')"
-		],
-		"description": "Asserts superset includes all members of subset in order"
-	},
-	"notIncludeOrderedMembers": {
-		"prefix": "notIncludeOrderedMembers",
-		"body": [
-			"assert.notIncludeOrderedMembers([${1:1, 2, 3, 4}], [${2:3, 2}], '${3:message}')"
-		],
-		"description": "Asserts superset does not include all members of subset in order"
-	},
-	"includeDeepOrderedMembers": {
-		"prefix": "includeDeepOrderedMembers",
+	"assert.includeDeepOrderedMembers": {
+		"prefix": ["includeDeepOrderedMembers", "assert", "vitest", "test"],
 		"body": [
 			"assert.includeDeepOrderedMembers([${1:{a: 1}, {b: 2}, {c: 3}}], [${2:{b: 2}}], '${3:message}')"
 		],
 		"description": "Asserts superset deep-includes all members of subset in order"
 	},
-	"notIncludeDeepOrderedMembers": {
-		"prefix": "notIncludeDeepOrderedMembers",
+	"assert.includeMembers": {
+		"prefix": ["includeMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.includeMembers([${1:1, 2, 3, 4}], [${2:2, 3}], '${3:message}')"
+		],
+		"description": "Asserts superset includes all members of subset"
+	},
+	"assert.includeOrderedMembers": {
+		"prefix": ["includeOrderedMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.includeOrderedMembers([${1:1, 2, 3, 4}], [${2:2, 3}], '${3:message}')"
+		],
+		"description": "Asserts superset includes all members of subset in order"
+	},
+	"assert.increases": {
+		"prefix": ["increases", "assert", "vitest", "test"],
+		"body": [
+			"assert.increases(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  '${4:message}'",
+			")"
+		],
+		"description": "Asserts fn increases object[prop]"
+	},
+	"assert.increasesButNotBy": {
+		"prefix": ["increasesButNotBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.increasesButNotBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn increases object[prop] but not by delta"
+	},
+	"assert.increasesBy": {
+		"prefix": ["increasesBy", "assert", "vitest", "test"],
+		"body": [
+			"assert.increasesBy(",
+			"  () => { $1 },",
+			"  ${2:object},",
+			"  '${3:property}',",
+			"  ${4:delta},",
+			"  '${5:message}'",
+			")"
+		],
+		"description": "Asserts fn increases object[prop] by delta"
+	},
+	"assert.instanceOf": {
+		"prefix": ["instanceOf", "assert", "vitest", "test"],
+		"body": ["assert.instanceOf(${1:value}, ${2:constructor}, '${3:message}')"],
+		"description": "Assert that value is instanceof constructor"
+	},
+	"assert.isAbove": {
+		"prefix": ["isAbove", "assert", "vitest", "test"],
+		"body": ["assert.isAbove(${1:value}, ${2:above}, '${3:message}')"],
+		"description": "Asserts value > above"
+	},
+	"assert.isArray": {
+		"prefix": ["isArray", "assert", "vitest", "test"],
+		"body": ["assert.isArray(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is an array"
+	},
+	"assert.isAtLeast": {
+		"prefix": ["isAtLeast", "assert", "vitest", "test"],
+		"body": ["assert.isAtLeast(${1:value}, ${2:atLeast}, '${3:message}')"],
+		"description": "Asserts value >= atLeast"
+	},
+	"assert.isAtMost": {
+		"prefix": ["isAtMost", "assert", "vitest", "test"],
+		"body": ["assert.isAtMost(${1:value}, ${2:atMost}, '${3:message}')"],
+		"description": "Asserts value <= atMost"
+	},
+	"assert.isBelow": {
+		"prefix": ["isBelow", "assert", "vitest", "test"],
+		"body": ["assert.isBelow(${1:value}, ${2:below}, '${3:message}')"],
+		"description": "Asserts value < below"
+	},
+	"assert.isBoolean": {
+		"prefix": ["isBoolean", "assert", "vitest", "test"],
+		"body": ["assert.isBoolean(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is a boolean"
+	},
+	"assert.isDefined": {
+		"prefix": ["isDefined", "assert", "vitest", "test"],
+		"body": ["assert.isDefined(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is not undefined"
+	},
+	"assert.isEmpty": {
+		"prefix": ["isEmpty", "assert", "vitest", "test"],
+		"body": ["assert.isEmpty(${1:value}, '${2:message}')"],
+		"description": "Asserts value is empty"
+	},
+	"assert.isExtensible": {
+		"prefix": ["isExtensible", "assert", "vitest", "test"],
+		"body": ["assert.isExtensible(${1:object}, '${2:message}')"],
+		"description": "Asserts object is extensible"
+	},
+	"assert.isFalse": {
+		"prefix": ["isFalse", "assert", "vitest", "test"],
+		"body": ["assert.isFalse(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is false"
+	},
+	"assert.isFinite": {
+		"prefix": ["isFinite", "assert", "vitest", "test"],
+		"body": ["assert.isFinite(${1:value}, '${2:message}')"],
+		"description": "Asserts value is a finite number"
+	},
+	"assert.isFrozen": {
+		"prefix": ["isFrozen", "assert", "vitest", "test"],
+		"body": ["assert.isFrozen(${1:object}, '${2:message}')"],
+		"description": "Asserts object is frozen"
+	},
+	"assert.isFunction": {
+		"prefix": ["isFunction", "assert", "vitest", "test"],
+		"body": ["assert.isFunction(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is a function"
+	},
+	"assert.isNaN": {
+		"prefix": ["isNaN", "assert", "vitest", "test"],
+		"body": ["assert.isNaN(${1:value}, '${2:message}')"],
+		"description": "Asserts value is NaN"
+	},
+	"assert.isNotArray": {
+		"prefix": ["isNotArray", "assert", "vitest", "test"],
+		"body": ["assert.isNotArray(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not an array"
+	},
+	"assert.isNotBoolean": {
+		"prefix": ["isNotBoolean", "assert", "vitest", "test"],
+		"body": ["assert.isNotBoolean(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not a boolean"
+	},
+	"assert.isNotEmpty": {
+		"prefix": ["isNotEmpty", "assert", "vitest", "test"],
+		"body": ["assert.isNotEmpty(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not empty"
+	},
+	"assert.isNotExtensible": {
+		"prefix": ["isNotExtensible", "assert", "vitest", "test"],
+		"body": ["assert.isNotExtensible(${1:object}, '${2:message}')"],
+		"description": "Asserts object is not extensible"
+	},
+	"assert.isNotFalse": {
+		"prefix": ["isNotFalse", "assert", "vitest", "test"],
+		"body": ["assert.isNotFalse(${1:value}, '${2:message}')"],
+		"description": "Asserts value !== false"
+	},
+	"assert.isNotFrozen": {
+		"prefix": ["isNotFrozen", "assert", "vitest", "test"],
+		"body": ["assert.isNotFrozen(${1:object}, '${2:message}')"],
+		"description": "Asserts object is not frozen"
+	},
+	"assert.isNotFunction": {
+		"prefix": ["isNotFunction", "assert", "vitest", "test"],
+		"body": ["assert.isNotFunction(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not a function"
+	},
+	"assert.isNotNaN": {
+		"prefix": ["isNotNaN", "assert", "vitest", "test"],
+		"body": ["assert.isNotNaN(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not NaN"
+	},
+	"assert.isNotNull": {
+		"prefix": ["isNotNull", "assert", "vitest", "test"],
+		"body": ["assert.isNotNull(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is not null"
+	},
+	"assert.isNotNumber": {
+		"prefix": ["isNotNumber", "assert", "vitest", "test"],
+		"body": ["assert.isNotNumber(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not a number"
+	},
+	"assert.isNotObject": {
+		"prefix": ["isNotObject", "assert", "vitest", "test"],
+		"body": ["assert.isNotObject(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not an object"
+	},
+	"assert.isNotOk": {
+		"prefix": ["isNotOk", "assert", "vitest", "test"],
+		"body": ["assert.isNotOk(${1:value}, '${2:message}')"],
+		"description": "Asserts that a value is falsy"
+	},
+	"assert.isNotSealed": {
+		"prefix": ["isNotSealed", "assert", "vitest", "test"],
+		"body": ["assert.isNotSealed(${1:object}, '${2:message}')"],
+		"description": "Asserts object is not sealed"
+	},
+	"assert.isNotString": {
+		"prefix": ["isNotString", "assert", "vitest", "test"],
+		"body": ["assert.isNotString(${1:value}, '${2:message}')"],
+		"description": "Asserts value is not a string"
+	},
+	"assert.isNotTrue": {
+		"prefix": ["isNotTrue", "assert", "vitest", "test"],
+		"body": ["assert.isNotTrue(${1:value}, '${2:message}')"],
+		"description": "Asserts value !== true"
+	},
+	"assert.isNull": {
+		"prefix": ["isNull", "assert", "vitest", "test"],
+		"body": ["assert.isNull(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is null"
+	},
+	"assert.isNumber": {
+		"prefix": ["isNumber", "assert", "vitest", "test"],
+		"body": ["assert.isNumber(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is a number"
+	},
+	"assert.isObject": {
+		"prefix": ["isObject", "assert", "vitest", "test"],
+		"body": ["assert.isObject(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is an object"
+	},
+	"assert.isOk": {
+		"prefix": ["isOk", "assert", "vitest", "test"],
+		"body": ["assert.isOk(${1:value}, '${2:message}')"],
+		"description": "Asserts that a value is truthy"
+	},
+	"assert.isSealed": {
+		"prefix": ["isSealed", "assert", "vitest", "test"],
+		"body": ["assert.isSealed(${1:object}, '${2:message}')"],
+		"description": "Asserts object is sealed"
+	},
+	"assert.isString": {
+		"prefix": ["isString", "assert", "vitest", "test"],
+		"body": ["assert.isString(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is a string"
+	},
+	"assert.isTrue": {
+		"prefix": ["isTrue", "assert", "vitest", "test"],
+		"body": ["assert.isTrue(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is true"
+	},
+	"assert.isUndefined": {
+		"prefix": ["isUndefined", "assert", "vitest", "test"],
+		"body": ["assert.isUndefined(${1:value}, '${2:message}')"],
+		"description": "Assert that a value is undefined"
+	},
+	"assert.lengthOf": {
+		"prefix": ["lengthOf", "assert", "vitest", "test"],
+		"body": ["assert.lengthOf(${1:value}, ${2:length}, '${3:message}')"],
+		"description": "Assert the length of a value"
+	},
+	"assert.match": {
+		"prefix": ["match", "assert", "vitest", "test"],
+		"body": ["assert.match(${1:value}, ${2:/regex/}, '${3:message}')"],
+		"description": "Assert that value matches regex"
+	},
+	"assert.nestedInclude": {
+		"prefix": ["nestedInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.nestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
+		],
+		"description": "Asserts value has needle at path"
+	},
+	"assert.nestedProperty": {
+		"prefix": ["nestedProperty", "assert", "vitest", "test"],
+		"body": ["assert.nestedProperty(${1:object}, '${2:path}', '${3:message}')"],
+		"description": "Asserts object has nested property path"
+	},
+	"assert.nestedPropertyVal": {
+		"prefix": ["nestedPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.nestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts nested property path equals value"
+	},
+	"assert.notDeepEqual": {
+		"prefix": ["notDeepEqual", "assert", "vitest", "test"],
+		"body": ["assert.notDeepEqual(${1:actual}, ${2:expected}, '${3:message}')"],
+		"description": "Asserts deep inequality"
+	},
+	"assert.notDeepInclude": {
+		"prefix": ["notDeepInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.notDeepInclude(${1:haystack}, ${2:needle}, '${3:message}')"
+		],
+		"description": "Asserts haystack does not deep-include needle"
+	},
+	"assert.notDeepNestedInclude": {
+		"prefix": ["notDeepNestedInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.notDeepNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
+		],
+		"description": "Asserts value does not have deep-equal needle at path"
+	},
+	"assert.notDeepNestedPropertyVal": {
+		"prefix": ["notDeepNestedPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.notDeepNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts nested property path does not deep equal value"
+	},
+	"assert.notDeepOwnInclude": {
+		"prefix": ["notDeepOwnInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.notDeepOwnInclude(${1:value}, ${2:needle}, '${3:message}')"
+		],
+		"description": "Asserts value does not have deep-equal own property needle"
+	},
+	"assert.notDeepPropertyVal": {
+		"prefix": ["notDeepPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.notDeepPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts object[prop] does not deep equal value"
+	},
+	"assert.notEqual": {
+		"prefix": ["notEqual", "assert", "vitest", "test"],
+		"body": ["assert.notEqual(${1:actual}, ${2:expected}, '${3:message}')"],
+		"description": "Asserts non-strict inequality (!=)"
+	},
+	"assert.notExists": {
+		"prefix": ["notExists", "assert", "vitest", "test"],
+		"body": ["assert.notExists(${1:value}, '${2:message}')"],
+		"description": "Asserts value is null or undefined"
+	},
+	"assert.notInclude": {
+		"prefix": ["notInclude", "assert", "vitest", "test"],
+		"body": ["assert.notInclude(${1:haystack}, ${2:needle}, '${3:message}')"],
+		"description": "Asserts !haystack.includes(needle)"
+	},
+	"assert.notIncludeDeepMembers": {
+		"prefix": ["notIncludeDeepMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notIncludeDeepMembers([${1:{a: 1}, {b: 2}}], [${2:{c: 3}}], '${3:message}')"
+		],
+		"description": "Asserts superset does not deep-include all members of subset"
+	},
+	"assert.notIncludeDeepOrderedMembers": {
+		"prefix": ["notIncludeDeepOrderedMembers", "assert", "vitest", "test"],
 		"body": [
 			"assert.notIncludeDeepOrderedMembers([${1:{a: 1}, {b: 2}}], [${2:{b: 2}, {a: 1}}], '${3:message}')"
 		],
 		"description": "Asserts superset does not deep-include all members of subset in order"
 	},
-	"oneOf": {
-		"prefix": "oneOf",
+	"assert.notIncludeMembers": {
+		"prefix": ["notIncludeMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notIncludeMembers([${1:1, 2, 3, 4}], [${2:5, 6}], '${3:message}')"
+		],
+		"description": "Asserts superset does not include all members of subset"
+	},
+	"assert.notIncludeOrderedMembers": {
+		"prefix": ["notIncludeOrderedMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notIncludeOrderedMembers([${1:1, 2, 3, 4}], [${2:3, 2}], '${3:message}')"
+		],
+		"description": "Asserts superset does not include all members of subset in order"
+	},
+	"assert.notInstanceOf": {
+		"prefix": ["notInstanceOf", "assert", "vitest", "test"],
+		"body": [
+			"assert.notInstanceOf(${1:value}, ${2:constructor}, '${3:message}')"
+		],
+		"description": "Asserts !(value instanceof constructor)"
+	},
+	"assert.notMatch": {
+		"prefix": ["notMatch", "assert", "vitest", "test"],
+		"body": ["assert.notMatch(${1:value}, ${2:/regex/}, '${3:message}')"],
+		"description": "Asserts !regex.test(value)"
+	},
+	"assert.notNestedInclude": {
+		"prefix": ["notNestedInclude", "assert", "vitest", "test"],
+		"body": [
+			"assert.notNestedInclude(${1:value}, '${2:path}', ${3:needle}, '${4:message}')"
+		],
+		"description": "Asserts value does not have needle at path"
+	},
+	"assert.notNestedProperty": {
+		"prefix": ["notNestedProperty", "assert", "vitest", "test"],
+		"body": [
+			"assert.notNestedProperty(${1:object}, '${2:path}', '${3:message}')"
+		],
+		"description": "Asserts object does not have nested property path"
+	},
+	"assert.notNestedPropertyVal": {
+		"prefix": ["notNestedPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.notNestedPropertyVal(${1:object}, '${2:path}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts nested property path does not equal value"
+	},
+	"assert.notOwnInclude": {
+		"prefix": ["notOwnInclude", "assert", "vitest", "test"],
+		"body": ["assert.notOwnInclude(${1:value}, ${2:needle}, '${3:message}')"],
+		"description": "Asserts value does not have own property needle"
+	},
+	"assert.notProperty": {
+		"prefix": ["notProperty", "assert", "vitest", "test"],
+		"body": ["assert.notProperty(${1:object}, '${2:prop}', '${3:message}')"],
+		"description": "Asserts object does not have property prop"
+	},
+	"assert.notPropertyVal": {
+		"prefix": ["notPropertyVal", "assert", "vitest", "test"],
+		"body": [
+			"assert.notPropertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
+		],
+		"description": "Asserts object[prop] != value"
+	},
+	"assert.notSameDeepMembers": {
+		"prefix": ["notSameDeepMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notSameDeepMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+		],
+		"description": "Asserts set1 and set2 do not have the same deep members"
+	},
+	"assert.notSameDeepOrderedMembers": {
+		"prefix": ["notSameDeepOrderedMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notSameDeepOrderedMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
+		],
+		"description": "Asserts set1 and set2 do not have same deep members in same order"
+	},
+	"assert.notSameMembers": {
+		"prefix": ["notSameMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notSameMembers([${1:1, 2, 3}], [${2:3, 2, 1}], '${3:message}')"
+		],
+		"description": "Asserts set1 and set2 do not have the same members"
+	},
+	"assert.notSameOrderedMembers": {
+		"prefix": ["notSameOrderedMembers", "assert", "vitest", "test"],
+		"body": [
+			"assert.notSameOrderedMembers([${1:1, 2, 3}], [${2:1, 2, 3}], '${3:message}')"
+		],
+		"description": "Asserts set1 and set2 do not have same members in same order"
+	},
+	"assert.notTypeOf": {
+		"prefix": ["notTypeOf", "assert", "vitest", "test"],
+		"body": ["assert.notTypeOf(${1:value}, '${2:type}', '${3:message}')"],
+		"description": "Asserts typeof value !== type"
+	},
+	"assert.oneOf": {
+		"prefix": ["oneOf", "assert", "vitest", "test"],
 		"body": [
 			"assert.oneOf(${1:value}, [${2:'option1'}, ${3:'option2'}], '${4:message}')"
 		],
 		"description": "Asserts value is one of list"
 	},
-	"changes": {
-		"prefix": "changes",
+	"assert.operator": {
+		"prefix": ["operator", "assert", "vitest", "test"],
+		"body": ["assert.operator(${1:val1}, '${2:>}', ${3:val2}, '${4:message}')"],
+		"description": "Asserts val1 op val2 is truthy"
+	},
+	"assert.ownInclude": {
+		"prefix": ["ownInclude", "assert", "vitest", "test"],
+		"body": ["assert.ownInclude(${1:value}, ${2:needle}, '${3:message}')"],
+		"description": "Asserts value has own property needle"
+	},
+	"assert.property": {
+		"prefix": ["property", "assert", "vitest", "test"],
+		"body": ["assert.property(${1:object}, '${2:property}', '${3:message}')"],
+		"description": "Assert that object has property"
+	},
+	"assert.propertyVal": {
+		"prefix": ["propertyVal", "assert", "vitest", "test"],
 		"body": [
-			"assert.changes(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
+			"assert.propertyVal(${1:object}, '${2:prop}', ${3:value}, '${4:message}')"
 		],
-		"description": "Asserts fn changes object[prop]"
+		"description": "Asserts object[prop] == value"
 	},
-	"changesBy": {
-		"prefix": "changesBy",
+	"assert.sameDeepMembers": {
+		"prefix": ["sameDeepMembers", "assert", "vitest", "test"],
 		"body": [
-			"assert.changesBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
+			"assert.sameDeepMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
 		],
-		"description": "Asserts fn changes object[prop] by delta"
+		"description": "Asserts set1 and set2 have the same deep members"
 	},
-	"doesNotChange": {
-		"prefix": "doesNotChange",
+	"assert.sameDeepOrderedMembers": {
+		"prefix": ["sameDeepOrderedMembers", "assert", "vitest", "test"],
 		"body": [
-			"assert.doesNotChange(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
+			"assert.sameDeepOrderedMembers([${1:{a: 1}}], [${2:{a: 1}}], '${3:message}')"
 		],
-		"description": "Asserts fn does not change object[prop]"
+		"description": "Asserts set1 and set2 have same deep members in same order"
 	},
-	"changesButNotBy": {
-		"prefix": "changesButNotBy",
+	"assert.sameMembers": {
+		"prefix": ["sameMembers", "assert", "vitest", "test"],
 		"body": [
-			"assert.changesButNotBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
+			"assert.sameMembers([${1:1, 2, 3}], [${2:3, 2, 1}], '${3:message}')"
 		],
-		"description": "Asserts fn changes object[prop] but not by delta"
+		"description": "Asserts set1 and set2 have the same members"
 	},
-	"increases": {
-		"prefix": "increases",
+	"assert.sameOrderedMembers": {
+		"prefix": ["sameOrderedMembers", "assert", "vitest", "test"],
 		"body": [
-			"assert.increases(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
+			"assert.sameOrderedMembers([${1:1, 2, 3}], [${2:1, 2, 3}], '${3:message}')"
 		],
-		"description": "Asserts fn increases object[prop]"
+		"description": "Asserts set1 and set2 have same members in same order"
 	},
-	"increasesBy": {
-		"prefix": "increasesBy",
-		"body": [
-			"assert.increasesBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
-		],
-		"description": "Asserts fn increases object[prop] by delta"
+	"assert.strictEqual": {
+		"prefix": ["strictEqual", "assert", "vitest", "test"],
+		"body": ["assert.strictEqual(${1:actual}, ${2:expected}, '${3:message}')"],
+		"description": "Assert strict equality (===)"
 	},
-	"doesNotIncrease": {
-		"prefix": "doesNotIncrease",
-		"body": [
-			"assert.doesNotIncrease(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
-		],
-		"description": "Asserts fn does not increase object[prop]"
+	"assert.throws": {
+		"prefix": ["throws", "assert", "vitest", "test"],
+		"body": ["assert.throws(() => {", "  $1", "}, ${2:Error}, '${3:message}')"],
+		"description": "Assert that a function throws an error"
 	},
-	"increasesButNotBy": {
-		"prefix": "increasesButNotBy",
-		"body": [
-			"assert.increasesButNotBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
-		],
-		"description": "Asserts fn increases object[prop] but not by delta"
+	"assert.typeOf": {
+		"prefix": ["typeOf", "assert", "vitest", "test"],
+		"body": ["assert.typeOf(${1:value}, '${2:type}', '${3:message}')"],
+		"description": "Assert the typeof a value"
 	},
-	"decreases": {
-		"prefix": "decreases",
-		"body": [
-			"assert.decreases(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
-		],
-		"description": "Asserts fn decreases object[prop]"
+	"assertType": {
+		"prefix": ["assertType", "vitest", "test"],
+		"body": ["assertType<${1:Type}>(${2:value})"],
+		"description": "Assert a value's type; fails with a type error if incorrect"
 	},
-	"decreasesBy": {
-		"prefix": "decreasesBy",
-		"body": [
-			"assert.decreasesBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
-		],
-		"description": "Asserts fn decreases object[prop] by delta"
+	"expectTypeOf": {
+		"prefix": ["expectTypeOf", "vitest", "test"],
+		"body": ["expectTypeOf(${1:value}).${2:toEqualTypeOf}<${3:Type}>()"],
+		"description": "Assert the type of a value at compile time"
 	},
-	"doesNotDecrease": {
-		"prefix": "doesNotDecrease",
-		"body": [
-			"assert.doesNotDecrease(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  '${4:message}'",
-			")"
-		],
-		"description": "Asserts fn does not decrease object[prop]"
-	},
-	"decreasesButNotBy": {
-		"prefix": "decreasesButNotBy",
-		"body": [
-			"assert.decreasesButNotBy(",
-			"  () => { $1 },",
-			"  ${2:object},",
-			"  '${3:property}',",
-			"  ${4:delta},",
-			"  '${5:message}'",
-			")"
-		],
-		"description": "Asserts fn decreases object[prop] but not by delta"
-	},
-	"ifError": {
-		"prefix": "ifError",
-		"body": ["assert.ifError(${1:value}, '${2:message}')"],
-		"description": "Asserts value is falsy"
-	},
-	"isExtensible": {
-		"prefix": "isExtensible",
-		"body": ["assert.isExtensible(${1:object}, '${2:message}')"],
-		"description": "Asserts object is extensible"
-	},
-	"isNotExtensible": {
-		"prefix": "isNotExtensible",
-		"body": ["assert.isNotExtensible(${1:object}, '${2:message}')"],
-		"description": "Asserts object is not extensible"
-	},
-	"isSealed": {
-		"prefix": "isSealed",
-		"body": ["assert.isSealed(${1:object}, '${2:message}')"],
-		"description": "Asserts object is sealed"
-	},
-	"isNotSealed": {
-		"prefix": "isNotSealed",
-		"body": ["assert.isNotSealed(${1:object}, '${2:message}')"],
-		"description": "Asserts object is not sealed"
-	},
-	"isFrozen": {
-		"prefix": "isFrozen",
-		"body": ["assert.isFrozen(${1:object}, '${2:message}')"],
-		"description": "Asserts object is frozen"
-	},
-	"isNotFrozen": {
-		"prefix": "isNotFrozen",
-		"body": ["assert.isNotFrozen(${1:object}, '${2:message}')"],
-		"description": "Asserts object is not frozen"
-	},
-	"isEmpty": {
-		"prefix": "isEmpty",
-		"body": ["assert.isEmpty(${1:value}, '${2:message}')"],
-		"description": "Asserts value is empty"
-	},
-	"isNotEmpty": {
-		"prefix": "isNotEmpty",
-		"body": ["assert.isNotEmpty(${1:value}, '${2:message}')"],
-		"description": "Asserts value is not empty"
-	},
-	"toMatchObjectType": {
-		"prefix": "toMatchObjectType",
-		"body": ["toMatchObjectType<${1:Type}>()"],
-		"description": "Check if the type matches an object subset"
-	},
-	"extract": {
-		"prefix": "extract",
-		"body": [".extract<${1:Type}>()"],
-		"description": "Extract a type from a union"
-	},
-	"exclude": {
-		"prefix": "exclude",
-		"body": [".exclude<${1:Type}>()"],
-		"description": "Exclude a type from a union"
-	},
-	"returns": {
-		"prefix": "returns",
-		"body": [".returns"],
-		"description": "Access the return type of a function type"
-	},
-	"parameters": {
-		"prefix": "parameters",
-		"body": [".parameters"],
-		"description": "Access the parameters type of a function as a tuple"
-	},
-	"parameter": {
-		"prefix": "parameter",
-		"body": [".parameter(${1:0})"],
-		"description": "Access the type of a function parameter at a specific index"
+	"asserts": {
+		"prefix": ["asserts", "expectTypeOf", "vitest", "test"],
+		"body": [".asserts<${1:Type}>()"],
+		"description": "Check if a function is an assertion function"
 	},
 	"constructorParameters": {
-		"prefix": "constructorParameters",
+		"prefix": ["constructorParameters", "expectTypeOf", "vitest", "test"],
 		"body": [".constructorParameters"],
 		"description": "Access constructor parameters type as a tuple"
 	},
+	"exclude": {
+		"prefix": ["exclude", "expectTypeOf", "vitest", "test"],
+		"body": [".exclude<${1:Type}>()"],
+		"description": "Exclude a type from a union"
+	},
+	"extract": {
+		"prefix": ["extract", "expectTypeOf", "vitest", "test"],
+		"body": [".extract<${1:Type}>()"],
+		"description": "Extract a type from a union"
+	},
+	"guards": {
+		"prefix": ["guards", "expectTypeOf", "vitest", "test"],
+		"body": [".guards<${1:Type}>()"],
+		"description": "Check if a function is a type guard"
+	},
 	"instance": {
-		"prefix": "instance",
+		"prefix": ["instance", "expectTypeOf", "vitest", "test"],
 		"body": [".instance"],
 		"description": "Access the instance type of a class"
 	},
 	"items": {
-		"prefix": "items",
+		"prefix": ["items", "expectTypeOf", "vitest", "test"],
 		"body": [".items"],
 		"description": "Access the type of array items"
 	},
+	"parameter": {
+		"prefix": ["parameter", "expectTypeOf", "vitest", "test"],
+		"body": [".parameter(${1:0})"],
+		"description": "Access the type of a function parameter at a specific index"
+	},
+	"parameters": {
+		"prefix": ["parameters", "expectTypeOf", "vitest", "test"],
+		"body": [".parameters"],
+		"description": "Access the parameters type of a function as a tuple"
+	},
 	"typeResolves": {
-		"prefix": "typeResolves",
+		"prefix": ["typeResolves", "expectTypeOf", "vitest", "test"],
 		"body": [".resolves"],
 		"description": "Access the resolved type of a promise"
 	},
-	"guards": {
-		"prefix": "guards",
-		"body": [".guards<${1:Type}>()"],
-		"description": "Check if a function is a type guard"
+	"returns": {
+		"prefix": ["returns", "expectTypeOf", "vitest", "test"],
+		"body": [".returns"],
+		"description": "Access the return type of a function type"
 	},
-	"asserts": {
-		"prefix": "asserts",
-		"body": [".asserts<${1:Type}>()"],
-		"description": "Check if a function is an assertion function"
+	"toBeAny": {
+		"prefix": ["toBeAny", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeAny()"],
+		"description": "Check if the type is any"
+	},
+	"toBeArray": {
+		"prefix": ["toBeArray", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeArray()"],
+		"description": "Check if the type is an array"
+	},
+	"toBeBoolean": {
+		"prefix": ["toBeBoolean", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeBoolean()"],
+		"description": "Check if the type is a boolean"
+	},
+	"toBeCallableWith": {
+		"prefix": ["toBeCallableWith", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeCallableWith(${1:...args})"],
+		"description": "Check if a function is callable with given arguments"
+	},
+	"toBeConstructibleWith": {
+		"prefix": ["toBeConstructibleWith", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeConstructibleWith(${1:...args})"],
+		"description": "Check if a class is constructible with given arguments"
+	},
+	"toBeFunction": {
+		"prefix": ["toBeFunction", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeFunction()"],
+		"description": "Check if the type is a function"
+	},
+	"toBeNever": {
+		"prefix": ["toBeNever", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeNever()"],
+		"description": "Check if the type is never"
+	},
+	"toBeObject": {
+		"prefix": ["toBeObject", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeObject()"],
+		"description": "Check if the type is an object"
+	},
+	"toBeString": {
+		"prefix": ["toBeString", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeString()"],
+		"description": "Check if the type is a string"
+	},
+	"toBeSymbol": {
+		"prefix": ["toBeSymbol", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeSymbol()"],
+		"description": "Check if the type is symbol"
+	},
+	"toBeUnknown": {
+		"prefix": ["toBeUnknown", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeUnknown()"],
+		"description": "Check if the type is unknown"
+	},
+	"toBeVoid": {
+		"prefix": ["toBeVoid", "expectTypeOf", "vitest", "test"],
+		"body": ["toBeVoid()"],
+		"description": "Check if the type is void"
+	},
+	"toEqualTypeOf": {
+		"prefix": ["toEqualTypeOf", "expectTypeOf", "vitest", "test"],
+		"body": ["toEqualTypeOf<${1:Type}>()"],
+		"description": "Check if types are exactly equal"
+	},
+	"toExtend": {
+		"prefix": ["toExtend", "expectTypeOf", "vitest", "test"],
+		"body": ["toExtend<${1:Type}>()"],
+		"description": "Check if the type extends T"
+	},
+	"toMatchObjectType": {
+		"prefix": ["toMatchObjectType", "expectTypeOf", "vitest", "test"],
+		"body": ["toMatchObjectType<${1:Type}>()"],
+		"description": "Check if the type matches an object subset"
+	},
+	"toMatchTypeOf": {
+		"prefix": ["toMatchTypeOf", "expectTypeOf", "vitest", "test"],
+		"body": ["toMatchTypeOf<${1:Type}>()"],
+		"description": "Check if the type matches a subset of T"
 	}
 }

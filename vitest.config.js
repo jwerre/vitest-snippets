@@ -6,7 +6,7 @@ export default defineConfig({
 		environment: 'node',
 
 		// Include test files matching these patterns
-		include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		include: ['**/*.{test,spec}.js'],
 
 		// Exclude these patterns from testing
 		exclude: [
@@ -16,28 +16,15 @@ export default defineConfig({
 			'**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
 		],
 
+		server: {
+			watch: {
+				// Watch files matching this pattern
+				include: ['**/snippets.json'],
+			},
+		},
+
 		// Global test timeout in milliseconds
 		testTimeout: 10000,
-
-		// Coverage configuration
-		coverage: {
-			provider: 'v8',
-			reporter: ['text', 'json', 'html'],
-			exclude: [
-				'coverage/**',
-				'dist/**',
-				'packages/*/test{,s}/**',
-				'**/*.d.ts',
-				'cypress/**',
-				'test{,s}/**',
-				'test{,-*}.{js,cjs,mjs,ts,tsx,jsx}',
-				'**/*{.,-}test.{js,cjs,mjs,ts,tsx,jsx}',
-				'**/*{.,-}spec.{js,cjs,mjs,ts,tsx,jsx}',
-				'**/__tests__/**',
-				'**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
-				'**/.{eslint,mocha,prettier}rc.{js,cjs,yml}',
-			],
-		},
 
 		// Enable globals (describe, it, expect, etc.) without importing
 		globals: true,
