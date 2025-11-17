@@ -1,21 +1,8 @@
-# A unique ID for your extension
 id = "vitest-snippets"
-
-# The public-facing name
 name = "Vitest Snippets"
-
-# Your extension's version
+schema_version = 1
 version = "1.0.0"
-
-# Your name and email
 authors = ["Jonah Werre<jonahwerre@gmail.com>"]
-
-# A short description
 description = "A comprehensive collection of Vitest snippets for the Zed editor to speed up test development."
-
-# The URL of your Git repository
 repository = "https://github.com/jwerre/vitest-snippets"
-
-# The most important line:
-# This tells Zed to load all snippets from your "snippets" folder.
-snippets = "snippets"
+snippets = "snippets/javascript.json"

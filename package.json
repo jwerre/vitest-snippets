@@ -29,12 +29,12 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/zed-industries/zed_vitest_snippets"
+		"url": "https://github.com/jwerre/vitest-snippets"
 	},
 	"bugs": {
-		"url": "https://github.com/zed-industries/zed_vitest_snippets/issues"
+		"url": "https://github.com/jwerre/vitest-snippets/issues"
 	},
-	"homepage": "https://github.com/zed-industries/zed_vitest_snippets#readme",
+	"homepage": "https://github.com/jwerre/vitest-snippets#readme",
 	"devDependencies": {
 		"cspell": "^9.3.0",
 		"eslint": "^9.39.1",

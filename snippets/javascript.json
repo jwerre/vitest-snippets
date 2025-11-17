@@ -31,9 +31,9 @@
 			"  ${1:{ a: 1, b: 2, expected: 3 }},",
 			"  ${2:{ a: 2, b: 3, expected: 5 }},",
 			"  ${3:{ a: 3, b: 4, expected: 7 }}",
-			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
-			"  test(`returns $${6} when $${4} + $${5}`, () => {",
-			"    expect($4 + $5).toBe($6)",
+			"])('$4', ({ ${5:a}, ${6:b}, ${7:expected} }) => {",
+			"  test(`returns \\${$6} when \\${$5} + \\${$6}`, () => {",
+			"    expect($5 + $6).toBe($7)",
 			"  })",
 			"})"
 		],
@@ -46,9 +46,9 @@
 			"  ${1:{ a: 1, b: 2, expected: 3 }},",
 			"  ${2:{ a: 2, b: 3, expected: 5 }},",
 			"  ${3:{ a: 3, b: 4, expected: 7 }}",
-			"])('$4', ({ ${4:a}, ${5:b}, ${6:expected} }) => {",
-			"  test(`returns $${6} when $${4} + $${5}`, () => {",
-			"    expect($4 + $5).toBe($6)",
+			"])('$4', ({ ${5:a}, ${6:b}, ${7:expected} }) => {",
+			"  test(`returns \\${$6} when \\${$5} + \\${$6}`, () => {",
+			"    expect($5 + $6).toBe($7)",
 			"  })",
 			"})"
 		],
@@ -927,6 +927,7 @@
 		"body": [".toHaveNthResolvedWith(${1:nth}, ${2:value})"],
 		"description": "Checks the nth resolved value"
 	},
+
 	"toHaveResolved": {
 		"prefix": ["toHaveResolved", "expect", "vitest", "test"],
 		"body": [".toHaveResolved()"],
